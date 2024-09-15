@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot='end' text="Atrás">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-back-button>
+    <ion-title>
+      Registro
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class='ion-padding' [fullscreen]="true">
+
+  <div>
+    <form [formGroup]="formRegistro" (ngSubmit)="onSubmit()">
+      <ion-input label="Email: " labelPlacement="floating" formControlName="email"></ion-input>
+
+      <ion-input label="Contraseña: " labelPlacement="floating" type="password" formControlName="clave">
+        <ion-input-password-toggle slot="end" color="medium"></ion-input-password-toggle>
+      </ion-input>
+
+      <ion-input label="Nombre de usuario: " labelPlacement="floating" formControlName="nombreUsuario"></ion-input>
+      <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre"></ion-input>
+      <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido"></ion-input>
+      <ion-input label="DNI: " labelPlacement="floating" formControlName="dni"></ion-input>
+
+      <ion-button class="botonRegistro" type="submit" [disabled]="formRegistro.invalid">Registrarme</ion-button>
+
+    </form>
+
+    
+  </div>
+
+</ion-content>

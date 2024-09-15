@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Login 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class='ion-padding' [fullscreen]="true">
+
+  <div>
+    <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+      <ion-input label="Nombre de usuario: " labelPlacement="floating" formControlName="nombreUsuario" placeholder="Ingrese su nombre"></ion-input>
+
+      <ion-input label="Contraseña: " labelPlacement="floating" type="password" formControlName="clave">
+        <ion-input-password-toggle slot="end" color="medium"></ion-input-password-toggle>
+      </ion-input>
+
+      <ion-button class="botonInicioSesion" type="submit" [disabled]="formLogin.invalid">Iniciar sesión</ion-button>
+
+    </form>
+
+    <div class="registrar">
+      <p>¿No tenes cuenta? Hacé clic <strong class="linkRegistro" (click)="irARegistro()">acá.</strong></p>
+    </div>
+  </div>
+
+  <!-- <app-explore-container name="a"></app-explore-container> -->
+</ion-content>

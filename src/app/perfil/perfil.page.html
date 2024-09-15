@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    
+    <ion-title>
+      Perfil
+    </ion-title>
+    <ion-button class="botonCerrarSesion" slot="end" (click)="cerrarSesion()">Cerrar sesión</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class='ion-padding' [fullscreen]="true" color="loro">
+
+  <ion-avatar class="fotoPerfil">
+    <img src="../../assets/leo.jpg" alt="Foto de perfil">
+    <ion-label>Foto de perfil</ion-label>
+  </ion-avatar>
+  <div class="formularioDatos">
+    
+    
+    <form [formGroup]="formDatos">
+
+      
+      <ion-input label="Email: " labelPlacement="floating" formControlName="email" type="text" [disabled]="!modificar"></ion-input>
+      <ion-input label="Nombre de usuario: " labelPlacement="floating" formControlName="nombreUsuario" type="text" [disabled]="!modificar"></ion-input>
+      <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre" type="text" [disabled]="!modificar"></ion-input>
+      <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido" type="text" [disabled]="!modificar"></ion-input>
+      <ion-input label="DNI: " labelPlacement="floating" formControlName="dni" type="text" [disabled]="!modificar"></ion-input>
+
+      <ion-button *ngIf="!modificar" type="submit" (click)="habilitarModificar()">Modificar</ion-button>
+      <ion-button *ngIf="modificar" type="submit" (click)="guardarCambios()">Guardar cambios</ion-button>
+
+    </form>
+
+    
+  </div>
+
+</ion-content>

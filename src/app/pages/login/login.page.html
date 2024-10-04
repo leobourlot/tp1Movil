@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class='ion-padding' [fullscreen]="true">
+
+
+  <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-input label="Email: " labelPlacement="floating" formControlName="email"
+            placeholder="Ingrese su email"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input label="Contraseña: " labelPlacement="floating" type="password" formControlName="password">
+            <ion-input-password-toggle slot="end" color="medium"></ion-input-password-toggle>
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col>
+          <ion-button class="botonInicioSesion" type="submit" [disabled]="formLogin.invalid">Iniciar sesión</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col >
+          <p>¿No tenes cuenta? Hacé clic <strong class="linkRegistro" (click)="irARegistro()">acá.</strong></p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+
+
+  <!-- <app-explore-container name="a"></app-explore-container> -->
+</ion-content>

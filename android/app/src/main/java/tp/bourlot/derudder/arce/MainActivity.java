@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package tp.bourlot.derudder.arce;
 
 import com.getcapacitor.BridgeActivity;
 

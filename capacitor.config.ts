@@ -1,9 +1,15 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'tp.bourlot.derudder.arce',
   appName: 'tp1Bourlot',
-  webDir: 'www'
+  webDir: 'www',
+  plugins: {
+    "FirebaseAuthentication": {
+      "skipNativeAuth": false,
+      "providers": []
+    }
+  }
 };
 
 export default config;

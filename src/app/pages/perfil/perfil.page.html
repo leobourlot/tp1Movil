@@ -20,11 +20,10 @@
     <form [formGroup]="formDatos">
 
       
-      <ion-input label="Email: " labelPlacement="floating" formControlName="email" type="text" [disabled]="!modificar"></ion-input>
-      <ion-input label="Nombre de usuario: " labelPlacement="floating" formControlName="nombreUsuario" type="text" [disabled]="!modificar"></ion-input>
-      <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre" type="text" [disabled]="!modificar"></ion-input>
-      <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido" type="text" [disabled]="!modificar"></ion-input>
-      <ion-input label="DNI: " labelPlacement="floating" formControlName="dni" type="text" [disabled]="!modificar"></ion-input>
+      <ion-input label="Email: " labelPlacement="floating" formControlName="email" type="text"></ion-input>
+      <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre" type="text"></ion-input>
+      <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido" type="text"></ion-input>
+      <ion-input label="DNI: " labelPlacement="floating" formControlName="dni" type="text"></ion-input>
 
       <ion-button *ngIf="!modificar" type="submit" (click)="habilitarModificar()">Modificar</ion-button>
       <ion-button *ngIf="modificar" type="submit" (click)="guardarCambios()">Guardar cambios</ion-button>

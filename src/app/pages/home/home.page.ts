@@ -27,7 +27,7 @@ export class HomePage {
   async presentToast(mensaje: string, color: string) {
     const toast = await this.toastController.create({
       message: mensaje,
-      duration: 3000,
+      duration: 2000,
       position: 'top',
       color: color,
     });

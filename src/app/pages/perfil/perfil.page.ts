@@ -21,6 +21,8 @@ export class PerfilPage {
     dni: new FormControl({ value: '', disabled: true }, Validators.required),
   });
 
+  imageSrc: string = '../../assets/leo.jpg'; // Ruta a la imagen de placeholder
+
   constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
 
   ngOnInit() {
@@ -62,15 +64,20 @@ export class PerfilPage {
 
   guardarCambios(){
     this.modificar = false;
-
     const datosModificados = this.formDatos.value
-
     this.formDatos.patchValue(datosModificados)
-
     this.formDatos.get('email')?.disable();
     this.formDatos.get('nombre')?.disable();
     this.formDatos.get('apellido')?.disable();
     this.formDatos.get('dni')?.disable();
+
+    const { nombre, apellido, dni } = this.formDatos.value;
+
+    this.authService.actualizarUsuario({ 
+      nombre: nombre,
+      apellido: apellido,
+      dni: dni
+    })
   }
 
   cerrarSesion() {
@@ -79,7 +86,20 @@ export class PerfilPage {
     this.router.navigateByUrl('/login')
   }
 
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageSrc = reader.result as string; // Actualiza la imagen con la nueva seleccionada
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
 }
+
 
 // {
 //   "displayName": null,

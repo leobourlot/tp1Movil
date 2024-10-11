@@ -1,5 +1,43 @@
-.fotoPerfil{
+
+ion-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-content ion-input{
+    margin-bottom: 10px;
+}
+
+.boton-centrado {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px; 
+  }
+
+
+.image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
     margin-bottom: 50px;
-    text-align: center;
+}
+  
+.image-placeholder img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    margin-bottom: 10px; /* Espacio entre la imagen y el input */
+}
+  
+.file-input input[type="file"] {
+    width: 100px; /* Mismo tamaño que la imagen */
+    height: 100px; 
+    opacity: 0; /* Hacer invisible el input real */
+    position: absolute;
 }
 

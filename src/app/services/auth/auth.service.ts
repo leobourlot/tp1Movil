@@ -54,11 +54,25 @@ export class AuthService {
     }
   }
 
-  async actualizarUsuario(params: { nombre: string }): Promise<void> {
-    const usuarioActualizado = await FirebaseAuthentication.updateProfile({
-      displayName: params.nombre
-    })
-    console.log("usuarioActualizado", usuarioActualizado);
+  async actualizarUsuario(params: { nombre: string, apellido: string, dni: string }): Promise<User | null> {
+    try {
+      const { user } = await FirebaseAuthentication.getCurrentUser();
+
+      if (user) {
+        await this.guardarDatosUsuario(user?.uid, {
+          nombre: params.nombre,
+          apellido: params.apellido,
+          dni: params.dni
+        });
+        return user;
+      } else {
+        throw new Error('Error: No se pudo obtener el UID del usuario.');
+      }
+
+    } catch (error) {
+      console.error('Error en la actualización:', error);
+      throw error;
+    }
   }
 
   // async guardarOtrosDatosUsuario(uid: string, params: { nombre: string, apellido: string, dni: string }) {

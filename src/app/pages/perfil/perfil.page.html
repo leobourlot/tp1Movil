@@ -1,6 +1,5 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    
     <ion-title>
       Perfil
     </ion-title>
@@ -8,29 +7,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class='ion-padding' [fullscreen]="true" color="loro">
-
-  <ion-avatar class="fotoPerfil">
-    <img src="../../assets/leo.jpg" alt="Foto de perfil">
-    <ion-label>Foto de perfil</ion-label>
-  </ion-avatar>
-  <div class="formularioDatos">
-    
-    
-    <form [formGroup]="formDatos">
-
-      
-      <ion-input label="Email: " labelPlacement="floating" formControlName="email" type="text"></ion-input>
-      <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre" type="text"></ion-input>
-      <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido" type="text"></ion-input>
-      <ion-input label="DNI: " labelPlacement="floating" formControlName="dni" type="text"></ion-input>
-
+<ion-content>
+  <div class="image-placeholder">
+    <img [src]="imageSrc" alt="Imagen de perfil" />
+      <input type="file" (change)="onFileChange($event)"/>
+  </div>
+  <form class="formularioDatos" [formGroup]="formDatos">
+    <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre" type="text"></ion-input>
+    <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido" type="text"></ion-input>
+    <ion-input label="DNI: " labelPlacement="floating" formControlName="dni" type="text"></ion-input>
+    <div class="boton-centrado">
       <ion-button *ngIf="!modificar" type="submit" (click)="habilitarModificar()">Modificar</ion-button>
       <ion-button *ngIf="modificar" type="submit" (click)="guardarCambios()">Guardar cambios</ion-button>
-
-    </form>
-
-    
-  </div>
-
+    </div>
+  </form>
 </ion-content>

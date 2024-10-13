@@ -7,18 +7,57 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="image-placeholder">
-    <img [src]="imageSrc" alt="Imagen de perfil" />
-      <input type="file" (change)="onFileChange($event)"/>
-  </div>
+<ion-content class='ion-padding' [fullscreen]="true">
+
+
+
+  <!-- <div class="formularioDatos"> -->
   <form class="formularioDatos" [formGroup]="formDatos">
-    <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre" type="text"></ion-input>
-    <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido" type="text"></ion-input>
-    <ion-input label="DNI: " labelPlacement="floating" formControlName="dni" type="text"></ion-input>
-    <div class="boton-centrado">
-      <ion-button *ngIf="!modificar" type="submit" (click)="habilitarModificar()">Modificar</ion-button>
-      <ion-button *ngIf="modificar" type="submit" (click)="guardarCambios()">Guardar cambios</ion-button>
-    </div>
+    <ion-grid>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size="auto">
+          <ion-avatar class="fotoPerfil">
+            <ion-img [src]="imageSrc" alt="Imagen de perfil" />
+            <ion-label>Foto de perfil</ion-label>
+
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <!-- <ion-item color="tertiary"> -->
+          <div class="boton-centrado">
+            <ion-button *ngIf="modificar" (click)="fileInput.click()">Cambiar foto</ion-button>
+          </div>
+          <input #fileInput type="file" hidden (change)="onFileChange($event)" />
+          <!-- </ion-item> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input label="Apellido: " labelPlacement="floating" formControlName="apellido" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input label="DNI: " labelPlacement="floating" formControlName="dni" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="boton-centrado">
+            <ion-button *ngIf="!modificar" type="submit" (click)="habilitarModificar()">Modificar</ion-button>
+            <ion-button *ngIf="modificar" type="submit" (click)="guardarCambios()">Guardar cambios</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </form>
+  <!-- </div> -->
+
 </ion-content>

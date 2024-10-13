@@ -84,7 +84,7 @@ export class AuthService {
   //   });
   // }
 
-  async loginEmail(params: { email: string, password: string }): Promise<any> {
+  async loginEmail(params: { email: string, password: string }): Promise<User | null> {
     const resultado = await FirebaseAuthentication.signInWithEmailAndPassword({
       email: params.email,
       password: params.password

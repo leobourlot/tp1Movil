@@ -42,6 +42,7 @@ export class PerfilPage {
   }
 
   modificar: boolean = false;
+  selectedFile: File | undefined;
 
   async presentToast(mensaje: string, color: string) {
     const toast = await this.toastController.create({
@@ -76,7 +77,8 @@ export class PerfilPage {
     this.authService.actualizarUsuario({ 
       nombre: nombre,
       apellido: apellido,
-      dni: dni
+      dni: dni,
+      archivoImagen: this.selectedFile,
     })
   }
 
@@ -88,13 +90,14 @@ export class PerfilPage {
 
 
   onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
+    this.selectedFile = event.target.files[0];
+    
+    if (this.selectedFile) {
       const reader = new FileReader();
       reader.onload = () => {
         this.imageSrc = reader.result as string; // Actualiza la imagen con la nueva seleccionada
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 

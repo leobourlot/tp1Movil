@@ -21,8 +21,9 @@ export class PerfilPage {
     dni: new FormControl({ value: '', disabled: true }, Validators.required),
   });
 
-  imageSrc: string = '../../assets/leo.jpg'; // Ruta a la imagen de placeholder
-
+  // imageSrc: string = '../../assets/leo.jpg'; // Ruta a la imagen de placeholder
+  imageSrc: string | undefined; // Ruta a la imagen de placeholder
+  
   constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
 
   ngOnInit() {
@@ -35,8 +36,10 @@ export class PerfilPage {
           email: user.email,
           nombre: user.nombre, 
           apellido: user.apellido,
-          dni: user.dni
+          dni: user.dni,
+          foto: user.fotoPerfilUrl
         });
+        this.imageSrc = user.fotoPerfilUrl
       }
     });
   }

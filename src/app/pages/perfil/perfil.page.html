@@ -27,7 +27,9 @@
         <ion-col>
           <!-- <ion-item color="tertiary"> -->
           <div class="boton-centrado">
-            <ion-button *ngIf="modificar" (click)="fileInput.click()">Cambiar foto</ion-button>
+            <ion-button *ngIf="modificar" (click)="fileInput.click()">Seleccionar archivo</ion-button>
+            <p *ngIf="modificar" class="separacionBotones">o</p>
+            <ion-button *ngIf="modificar" (click)="fileInput.click()">Seleccionar archivo</ion-button>
           </div>
           <input #fileInput type="file" hidden (change)="onFileChange($event)" />
           <!-- </ion-item> -->

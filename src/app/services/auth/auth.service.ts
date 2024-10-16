@@ -104,6 +104,23 @@ export class AuthService {
     }
   }
 
+  // async actualizarDatosUsuario(uid: string, params: { nombre: string, apellido: string, dni: string, foto: string }): Promise<void> {
+  //   try {
+  //     const { user } = await FirebaseAuthentication.getCurrentUser();
+
+  //     if (user) {
+  //       await setDoc(doc(this.db, 'usuarios', uid), {
+  //         nombre: params.nombre,
+  //         apellido: params.apellido,
+  //         dni: params.dni,
+  //         foto: params.foto
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error guardando datos en Firestore:', error);
+  //   }
+  // }
+
   // async guardarOtrosDatosUsuario(uid: string, params: { nombre: string, apellido: string, dni: string }) {
   //   // Suponiendo que tienes un servicio para interactuar con Firestore
   //   await this.firestore.collection('usuarios').doc(uid).set({
@@ -131,13 +148,14 @@ export class AuthService {
       const userDocSnapshot = await getDoc(userDocRef);
 
       if (userDocSnapshot.exists()) {
-        const userData = userDocSnapshot.data() as { nombre: string; apellido: string; dni: string };;
+        const userData = userDocSnapshot.data() as { nombre: string; apellido: string; dni: string, fotoPerfilUrl: string | undefined};
         
         return {
           email: user.email,
           nombre: userData.nombre,
           apellido: userData.apellido,
           dni: userData.dni, 
+          fotoPerfilUrl: userData.fotoPerfilUrl
         };
       } else {
         console.error('No se encontraron datos adicionales del usuario en Firestore.');

@@ -19,7 +19,6 @@
           <ion-avatar class="fotoPerfil">
             <ion-img [src]="imageSrc" alt="Imagen de perfil" />
             <ion-label>Foto de perfil</ion-label>
-
           </ion-avatar>
         </ion-col>
       </ion-row>
@@ -27,7 +26,8 @@
         <ion-col>
           <!-- <ion-item color="tertiary"> -->
           <div class="boton-centrado">
-            <ion-button *ngIf="modificar" (click)="fileInput.click()">Seleccionar archivo</ion-button>
+            <!-- Botón para abrir la cámara -->
+            <ion-button *ngIf="modificar" (click)="openCamera()">Abrir cámara</ion-button>
             <p *ngIf="modificar" class="separacionBotones">o</p>
             <ion-button *ngIf="modificar" (click)="fileInput.click()">Seleccionar archivo</ion-button>
           </div>

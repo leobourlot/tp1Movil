@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { IonBackButton, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonButton, IonInput, IonImg, IonAvatar, IonLabel, ToastController, IonItem, IonGrid, IonCol, IonRow } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-perfil',
@@ -83,6 +84,17 @@ export class PerfilPage {
       dni: dni,
       archivoImagen: this.selectedFile,
     })
+  }
+
+  // Método para abrir la cámara
+  async openCamera() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+    this.imageSrc = image.dataUrl; // Mostrar la imagen capturada
   }
 
   cerrarSesion() {

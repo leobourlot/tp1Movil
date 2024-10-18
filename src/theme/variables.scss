@@ -16,7 +16,7 @@
 	--ion-color-secondary-shade: #00548f;
 	--ion-color-secondary-tint: #1a6fac;
 
-	--ion-color-tertiary: #dff3fb;
+	--ion-color-tertiary: #DDF2F9;
 	--ion-color-tertiary-rgb: 223,243,251;
 	--ion-color-tertiary-contrast: #000000;
 	--ion-color-tertiary-contrast-rgb: 0,0,0;
@@ -65,6 +65,10 @@
 	--ion-color-dark-shade: #292929;
 	--ion-color-dark-tint: #444444;
 
+}
+
+:host{
+	--backgroung: var(--ion-color-tertiary);
 }
 
 .ion-color-danger {

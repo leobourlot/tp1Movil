@@ -1,7 +1,7 @@
 import { Component, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonHeader, IonText, IonTitle, IonToolbar, Platform, IonRouterOutlet, ToastController } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonHeader, IonText, IonTitle, IonToolbar, Platform, IonRouterOutlet, ToastController, IonItem, IonImg, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { App } from '@capacitor/app';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText]
+  imports: [IonCol, IonRow, IonGrid, IonImg, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText]
 })
 export class HomePage {
 

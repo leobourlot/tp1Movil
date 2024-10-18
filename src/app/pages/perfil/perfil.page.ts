@@ -24,18 +24,18 @@ export class PerfilPage {
 
   // imageSrc: string = '../../assets/leo.jpg'; // Ruta a la imagen de placeholder
   imageSrc: string | undefined; // Ruta a la imagen de placeholder
-  
+
   constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
 
   ngOnInit() {
-    
+
     this.authService.usuarioActual().then((user) => {
       if (user) {
-        
+
         console.log('user es: ', user)
         this.formDatos.patchValue({
           email: user.email,
-          nombre: user.nombre, 
+          nombre: user.nombre,
           apellido: user.apellido,
           dni: user.dni,
           foto: user.fotoPerfilUrl
@@ -58,8 +58,8 @@ export class PerfilPage {
 
     await toast.present();
   }
-  
-  habilitarModificar(){
+
+  habilitarModificar() {
     this.modificar = true;
     this.formDatos.get('email')?.enable();
     this.formDatos.get('nombre')?.enable();
@@ -67,7 +67,7 @@ export class PerfilPage {
     this.formDatos.get('dni')?.enable();
   }
 
-  guardarCambios(){
+  guardarCambios() {
     this.modificar = false;
     const datosModificados = this.formDatos.value
     this.formDatos.patchValue(datosModificados)
@@ -78,7 +78,7 @@ export class PerfilPage {
 
     const { nombre, apellido, dni } = this.formDatos.value;
 
-    this.authService.actualizarUsuario({ 
+    this.authService.actualizarUsuario({
       nombre: nombre,
       apellido: apellido,
       dni: dni,
@@ -94,7 +94,23 @@ export class PerfilPage {
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera
     });
-    this.imageSrc = image.dataUrl; // Mostrar la imagen capturada
+    this.imageSrc = image.dataUrl;
+
+    // Convertir la DataURL a Blob
+    if (image.dataUrl) {
+      const blob = await this.dataUrlToBlob(image.dataUrl);
+
+      // Crear un archivo a partir del Blob (necesario para Firebase Storage)
+      const file = new File([blob], 'perfil.jpg', { type: 'image/jpeg' });
+
+      this.selectedFile = file; // Guardar el archivo en selectedFile
+      console.log('selectedFile es: ', this.selectedFile)
+    }
+  }
+
+  async dataUrlToBlob(dataUrl: string): Promise<Blob> {
+    const res = await fetch(dataUrl);
+    return await res.blob();
   }
 
   cerrarSesion() {
@@ -106,7 +122,7 @@ export class PerfilPage {
 
   onFileChange(event: any) {
     this.selectedFile = event.target.files[0];
-    
+
     if (this.selectedFile) {
       const reader = new FileReader();
       reader.onload = () => {

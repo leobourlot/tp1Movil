@@ -25,15 +25,21 @@
       <ion-row>
         <ion-col>
           <!-- <ion-item color="tertiary"> -->
-          <div class="boton-centrado">
-            <!-- Botón para abrir la cámara -->
-            <ion-button *ngIf="modificar" (click)="openCamera()">Abrir cámara</ion-button>
-            <p *ngIf="modificar" class="separacionBotones">o</p>
-            <ion-button *ngIf="modificar" (click)="fileInput.click()">Seleccionar archivo</ion-button>
-          </div>
-          <input #fileInput type="file" hidden (change)="onFileChange($event)" />
-          <!-- </ion-item> -->
+          <!-- <div class="boton-centrado"> -->
+          <!-- Botón para abrir la cámara -->
+
+          <ion-button color="secondary" *ngIf="modificar" (click)="openCamera()">Usar cámara</ion-button>
         </ion-col>
+        <ion-col>
+          <p *ngIf="modificar" class="separacionBotones">o</p>
+        </ion-col>
+        <ion-col>
+          <ion-button color="secondary" *ngIf="modificar" (click)="fileInput.click()">Seleccionar foto</ion-button>
+        </ion-col>
+        <!-- </div> -->
+        <input #fileInput type="file" hidden (change)="onFileChange($event)" />
+
+        <!-- </ion-item> -->
       </ion-row>
       <ion-row>
         <ion-col>

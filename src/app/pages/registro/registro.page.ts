@@ -37,52 +37,25 @@ export class RegistroPage {
     await toast.present();
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.formRegistro.valid) {
       const { email, clave, nombre, apellido, dni } = this.formRegistro.value;
-  
-      this.authService.registroEmail({ 
+
+      this.authService.registroEmail({
         email: email,
         password: clave,
         nombre: nombre,
         apellido: apellido,
         dni: dni
       })
-      .then(() => {
-        this.presentToast('Usuario registrado correctamente.', 'success');
-        this.router.navigateByUrl('/login');
-      })
-      .catch((error) => {
-        console.error('Error al registrar:', error);
-        this.presentToast('Error al registrar el usuario.', 'danger');
-      });
+        .then(() => {
+          this.presentToast('Usuario registrado correctamente.', 'success');
+          this.router.navigateByUrl('/login');
+        })
+        .catch((error) => {
+          console.error('Error al registrar:', error);
+          this.presentToast('Error al registrar el usuario.', 'danger');
+        });
     }
   }
-  
-  // onSubmit() {
-  //   const email = this.formRegistro.value.email;
-  //   const usuario = this.formRegistro.value.nombreUsuario;
-  //   const dni = this.formRegistro.value.dni;
-
-
-  //   if (email === 'leo_bourlot@hotmail.com') {
-  //     console.log('El mail utilizado ya tiene una cuenta registrada.');
-  //     this.presentToast('El mail utilizado ya tiene una cuenta registrada.', 'danger')
-
-  //   } else if (dni === '34646209') {
-  //     console.log('Ya existe un usuario con el DNI ingresado.');
-  //     this.presentToast('Ya existe un usuario con el DNI ingresado.', 'danger')
-
-  //   } else if (usuario === 'leonardo') {
-  //     console.log('Ya existe un usuario con el usuario ingresado.');
-  //     this.presentToast('Ya existe un usuario con el usuario ingresado.', 'danger')
-
-  //   } else {
-  //     console.log('Usuario registrado correctamente.')
-  //     this.presentToast('Usuario registrado correctamente.', 'success')
-  //     this.router.navigateByUrl('/login');
-  //   }
-
-  // }
-
 }

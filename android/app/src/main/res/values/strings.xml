@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">tp1Bourlot</string>
-    <string name="title_activity_main">tp1Bourlot</string>
+    <string name="app_name">concorSuite</string>
+    <string name="title_activity_main">concorSuite</string>
     <string name="package_name">tp.bourlot.derudder.arce</string>
     <string name="custom_url_scheme">tp.bourlot.derudder.arce</string>
 </resources>

@@ -1,6 +1,5 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {inject} from "@angular/core";
-import {Storage} from "../enums/storage";
 import {AuthService} from "../../services/auth/auth.service";
 
 export const authGuard: CanActivateFn = async (route, state) => {

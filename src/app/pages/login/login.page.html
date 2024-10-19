@@ -8,7 +8,7 @@
 
 <ion-content>
 
- 
+
   <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
     <ion-grid>
       <ion-row>
@@ -26,20 +26,26 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col>
-          <!-- <ion-button class="botonInicioSesion" type="submit" [disabled]="formLogin.invalid">Iniciar sesión</ion-button> -->
-          <ion-button class="botonInicioSesion" id="open-loading" type="submit" [disabled]="formLogin.invalid">Iniciar sesión</ion-button>
-          <ion-loading class="custom-loading" trigger="open-loading" message="Validando datos, aguarde un momento." duration="1000" spinner="lines-sharp"></ion-loading>
+          <ion-button class="botonInicioSesion" id="open-loading" type="submit" [disabled]="formLogin.invalid">Iniciar
+            sesión</ion-button>
+          <ion-loading class="custom-loading" trigger="open-loading" message="Validando datos, aguarde un momento."
+            duration="1000" spinner="lines-sharp"></ion-loading>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col >
+        <ion-col>
           <p>¿No tenes cuenta? Hacé click <strong class="linkRegistro" (click)="irARegistro()">acá.</strong></p>
         </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-img src="../../../assets/logo.png" alt="Logo de ConcorSuite" />
+        </ion-col>
+
       </ion-row>
     </ion-grid>
   </form>
 
 
 
-  <!-- <app-explore-container name="a"></app-explore-container> -->
 </ion-content>

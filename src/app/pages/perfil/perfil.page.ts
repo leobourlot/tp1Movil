@@ -22,8 +22,7 @@ export class PerfilPage {
     dni: new FormControl({ value: '', disabled: true }, Validators.required),
   });
 
-  // imageSrc: string = '../../assets/leo.jpg'; // Ruta a la imagen de placeholder
-  imageSrc: string | undefined; // Ruta a la imagen de placeholder
+  imageSrc: string | undefined;
 
   constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
 
@@ -85,8 +84,7 @@ export class PerfilPage {
       archivoImagen: this.selectedFile,
     })
   }
-
-  // Método para abrir la cámara
+  
   async openCamera() {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -96,14 +94,12 @@ export class PerfilPage {
     });
     this.imageSrc = image.dataUrl;
 
-    // Convertir la DataURL a Blob
     if (image.dataUrl) {
       const blob = await this.dataUrlToBlob(image.dataUrl);
 
-      // Crear un archivo a partir del Blob (necesario para Firebase Storage)
       const file = new File([blob], 'perfil.jpg', { type: 'image/jpeg' });
 
-      this.selectedFile = file; // Guardar el archivo en selectedFile
+      this.selectedFile = file;
       console.log('selectedFile es: ', this.selectedFile)
     }
   }
@@ -126,40 +122,10 @@ export class PerfilPage {
     if (this.selectedFile) {
       const reader = new FileReader();
       reader.onload = () => {
-        this.imageSrc = reader.result as string; // Actualiza la imagen con la nueva seleccionada
+        this.imageSrc = reader.result as string; 
       };
       reader.readAsDataURL(this.selectedFile);
     }
   }
 
 }
-
-
-// {
-//   "displayName": null,
-//   "email": "leobourlot@gmail.com",
-//   "emailVerified": false,
-//   "isAnonymous": false,
-//   "metadata": {
-//       "creationTime": 1728511122000,
-//       "lastSignInTime": 1728521208000
-//   },
-//   "phoneNumber": null,
-//   "photoUrl": null,
-//   "providerData": [
-//       {
-//           "displayName": null,
-//           "email": "leobourlot@gmail.com",
-//           "phoneNumber": null,
-//           "photoUrl": null,
-//           "providerId": "password",
-//           "uid": "leobourlot@gmail.com"
-//       }
-//   ],
-//   "providerId": "firebase",
-//   "tenantId": null,
-//   "uid": "K2owMwwMAwM2QUQiPsFk4mLq6Es1",
-//   "dni": "34646209",
-//   "nombre": "leonardo",
-//   "apellido": "bourlot"
-// }

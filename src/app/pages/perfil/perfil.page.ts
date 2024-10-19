@@ -83,6 +83,8 @@ export class PerfilPage {
       dni: dni,
       archivoImagen: this.selectedFile,
     })
+
+    this.presentToast('Datos actualizados correctamente.', 'secondary')
   }
   
   async openCamera() {

@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonBackButton, IonIcon, IonButton, IonInput, IonInputPasswordToggle, ToastController, IonLoading } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonBackButton, IonIcon, IonButton, IonLoading, IonInputPasswordToggle, IonInput } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.page.html',
-  styleUrls: ['./registro.page.scss'],
+  selector: 'app-registro-hotel',
+  templateUrl: './registro-hotel.page.html',
+  styleUrls: ['./registro-hotel.page.scss'],
   standalone: true,
   providers: [],
-  imports: [IonButton, IonInput, IonInputPasswordToggle, IonIcon, IonBackButton, IonHeader, IonToolbar, IonTitle, IonContent, FormsModule, ReactiveFormsModule, IonLoading],
+  imports: [IonLoading, IonButton, IonInput, IonInputPasswordToggle, IonIcon, IonBackButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
-export class RegistroPage {
+export class RegistroHotelPage {
 
-  formRegistro: FormGroup = new FormGroup({
+  formRegistroHotel: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     clave: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required]),
@@ -37,16 +37,16 @@ export class RegistroPage {
   }
 
   onSubmit() {
-    if (this.formRegistro.valid) {
-      const { email, clave, nombre, apellido, dni } = this.formRegistro.value;
+    if (this.formRegistroHotel.valid) {
+      const { email, clave, nombre, apellido, dni } = this.formRegistroHotel.value;
 
-      this.authService.registroEmail({
+      this.authService.registroEmailHotel({
         email: email,
         password: clave,
         nombre: nombre,
         apellido: apellido,
         dni: dni,
-        tipoUsuario: "2"
+        tipoUsuario: "1"
       })
         .then(() => {
           this.presentToast('Usuario registrado correctamente.', 'success');

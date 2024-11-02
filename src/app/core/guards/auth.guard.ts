@@ -9,8 +9,27 @@ export const authGuard: CanActivateFn = async (route, state) => {
   try {
     const user = await service.usuarioActual();
     console.log(user)
+
+    
+    if (!user) {
+      await router.navigate(['/login'], { replaceUrl: true });
+      return false
+    }
+
+    // Ahora que estamos seguros de que user existe, podemos acceder a tipoUsuario
+    const tipoUsuario = user.tipoUsuario;
+    
     //Logica para verificar si el token expiró
-    return !user ? router.navigate(['/login'], {replaceUrl: true}) : true;
+    if (tipoUsuario === "1"){
+      return true
+    } else if(tipoUsuario === "2"){
+      return true
+    } else{
+      await router.navigate(['/login'], {replaceUrl: true})
+      return false
+    }
+    
+    
   } catch (e) {
     return router.navigate(['/login'], {replaceUrl: true});
   }

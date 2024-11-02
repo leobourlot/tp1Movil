@@ -1,7 +1,7 @@
 import { Component, Optional } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonHeader, IonText, IonTitle, IonToolbar, Platform, IonRouterOutlet, ToastController, IonItem, IonImg, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonHeader, IonText, IonTitle, IonToolbar, Platform, IonRouterOutlet, ToastController, IonItem, IonImg, IonGrid, IonRow, IonCol, IonCard, IonCardTitle, IonCardHeader, IonCardSubtitle, IonCardContent } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { App } from '@capacitor/app';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -11,9 +11,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonCol, IonRow, IonGrid, IonImg, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText]
+  imports: [IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonCol, IonRow, IonGrid, IonImg, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText, NgIf]
 })
 export class HomePage {
+
+  esHotel: boolean | undefined;
 
   constructor(private router: Router, private platform: Platform, private authService: AuthService, private toastController: ToastController,
     @Optional() private routerOutlet?: IonRouterOutlet) {
@@ -22,6 +24,22 @@ export class HomePage {
         App.exitApp();
       }
     });
+  }
+
+  ngOnInit(){
+    this.authService.usuarioActual().then((user) => {
+      if(user){
+        const tipoUsuario = user.tipoUsuario
+
+        if(tipoUsuario === "1"){
+          this.esHotel = true
+        } else{
+          this.esHotel = false
+        }
+
+      }
+    })
+    
   }
 
   async presentToast(mensaje: string, color: string) {

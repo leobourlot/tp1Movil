@@ -13,6 +13,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../home/home.page').then((m) => m.HomePage),
       },
+      
       {
         path: 'perfil',
         canActivate: [authGuard],
@@ -33,3 +34,4 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 ];
+

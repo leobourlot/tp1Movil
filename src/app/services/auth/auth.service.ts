@@ -16,13 +16,14 @@ export class AuthService {
 
   constructor() { }
 
-  async guardarDatosUsuario(uid: string, params: { nombre: string, apellido: string, dni: string, fotoPerfilUrl?: string }): Promise<void> {
+  async guardarDatosUsuario(uid: string, params: { nombre: string, apellido: string, dni: string, fotoPerfilUrl?: string, tipoUsuario: string }): Promise<void> {
     try {
       await setDoc(doc(this.db, 'usuarios', uid), {
         nombre: params.nombre,
         apellido: params.apellido,
         dni: params.dni,
-        fotoPerfilUrl: params.fotoPerfilUrl || null
+        fotoPerfilUrl: params.fotoPerfilUrl || null,
+        tipoUsuario: params.tipoUsuario,
       });
     } catch (error) {
       console.error('Error guardando datos en Firestore:', error);
@@ -45,7 +46,7 @@ export class AuthService {
     }
   }
 
-  async registroEmail(params: { email: string, password: string, nombre: string, apellido: string, dni: string }): Promise<User | null> {
+  async registroEmail(params: { email: string, password: string, nombre: string, apellido: string, dni: string, tipoUsuario: string }): Promise<User | null> {
 
     try {
 
@@ -59,7 +60,8 @@ export class AuthService {
         await this.guardarDatosUsuario(usuario?.uid, {
           nombre: params.nombre,
           apellido: params.apellido,
-          dni: params.dni
+          dni: params.dni,
+          tipoUsuario: "2"
         });
         return usuario;
       } else {
@@ -71,7 +73,34 @@ export class AuthService {
     }
   }
 
-  async actualizarUsuario(params: { nombre: string, apellido: string, dni: string, archivoImagen?: File }): Promise<User | null> {
+  async registroEmailHotel(params: { email: string, password: string, nombre: string, apellido: string, dni: string, tipoUsuario: string }): Promise<User | null> {
+
+    try {
+
+      const resultado = await FirebaseAuthentication.createUserWithEmailAndPassword({
+        email: params.email,
+        password: params.password
+      });
+      const usuario = resultado.user;
+
+      if (usuario) {
+        await this.guardarDatosUsuario(usuario?.uid, {
+          nombre: params.nombre,
+          apellido: params.apellido,
+          dni: params.dni,
+          tipoUsuario: "1"
+        });
+        return usuario;
+      } else {
+        throw new Error('Error: No se pudo obtener el UID del usuario.');
+      }
+    } catch (error) {
+      console.error('Error en registro:', error);
+      throw error;
+    }
+  }
+
+  async actualizarUsuario(params: { nombre: string, apellido: string, dni: string, archivoImagen?: File, tipoUsuario: string }): Promise<User | null> {
     try {
       const { user } = await FirebaseAuthentication.getCurrentUser();
 
@@ -86,7 +115,8 @@ export class AuthService {
           nombre: params.nombre,
           apellido: params.apellido,
           dni: params.dni,
-          fotoPerfilUrl: fotoUrl
+          fotoPerfilUrl: fotoUrl,
+          tipoUsuario: params.tipoUsuario
         });
         return user;
       } else {
@@ -117,14 +147,15 @@ export class AuthService {
       const userDocSnapshot = await getDoc(userDocRef);
 
       if (userDocSnapshot.exists()) {
-        const userData = userDocSnapshot.data() as { nombre: string; apellido: string; dni: string, fotoPerfilUrl: string | undefined };
+        const userData = userDocSnapshot.data() as { nombre: string; apellido: string; dni: string, fotoPerfilUrl: string | undefined, tipoUsuario: string };
 
         return {
           email: user.email,
           nombre: userData.nombre,
           apellido: userData.apellido,
           dni: userData.dni,
-          fotoPerfilUrl: userData.fotoPerfilUrl
+          fotoPerfilUrl: userData.fotoPerfilUrl,
+          tipoUsuario: userData.tipoUsuario
         };
       } else {
         console.error('No se encontraron datos adicionales del usuario en Firestore.');

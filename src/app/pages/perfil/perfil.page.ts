@@ -20,6 +20,7 @@ export class PerfilPage {
     nombre: new FormControl({ value: '', disabled: true }, Validators.required),
     apellido: new FormControl({ value: '', disabled: true }, Validators.required),
     dni: new FormControl({ value: '', disabled: true }, Validators.required),
+    tipoUsuario: new FormControl ({ value: '', disabled: true }, Validators.required)
   });
 
   imageSrc: string | undefined;
@@ -37,7 +38,8 @@ export class PerfilPage {
           nombre: user.nombre,
           apellido: user.apellido,
           dni: user.dni,
-          foto: user.fotoPerfilUrl
+          foto: user.fotoPerfilUrl,
+          tipoUsuario: user.tipoUsuario
         });
         this.imageSrc = user.fotoPerfilUrl
       }
@@ -75,13 +77,14 @@ export class PerfilPage {
     this.formDatos.get('apellido')?.disable();
     this.formDatos.get('dni')?.disable();
 
-    const { nombre, apellido, dni } = this.formDatos.value;
+    const { nombre, apellido, dni, tipoUsuario } = this.formDatos.value;
 
     this.authService.actualizarUsuario({
       nombre: nombre,
       apellido: apellido,
       dni: dni,
       archivoImagen: this.selectedFile,
+      tipoUsuario: tipoUsuario
     })
 
     this.presentToast('Datos actualizados correctamente.', 'secondary')

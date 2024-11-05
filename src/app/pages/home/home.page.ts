@@ -59,4 +59,8 @@ export class HomePage {
     this.router.navigateByUrl('/login')
   }
 
+  irANuevoHotel() {
+    this.router.navigateByUrl('nuevoHotel')
+  }
+
 }

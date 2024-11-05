@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot='end' text="Atrás">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-back-button>
+    <ion-title>
+      Nuevo hotel
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class='ion-padding' [fullscreen]="true">
+
+  <div>
+    <form [formGroup]="formNuevoHotel" (ngSubmit)="onSubmit()">
+
+      <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre"></ion-input>
+      <ion-input label="Direccion: " labelPlacement="floating" formControlName="apellido"></ion-input>
+      <ion-input label="DNI: " labelPlacement="floating" formControlName="dni"></ion-input>
+
+      <ion-button class="botonRegistro" id="open-loading" type="submit" [disabled]="formNuevoHotel.invalid">Registrarme</ion-button>
+      <ion-loading class="custom-loading" trigger="open-loading" message="Validando datos, aguarde un momento." duration="1000" spinner="lines-sharp" didDismiss="true"></ion-loading>
+
+    </form>
+
+    
+  </div>
+
+</ion-content>

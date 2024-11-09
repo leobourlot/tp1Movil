@@ -5,6 +5,7 @@ import { IonButton, IonContent, IonHeader, IonText, IonTitle, IonToolbar, Platfo
 import { Router } from '@angular/router';
 import { App } from '@capacitor/app';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +15,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   imports: [IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonCol, IonRow, IonGrid, IonImg, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText, NgIf]
 })
 export class HomePage {
-
+  hoteles: any[] = [];
   esHotel: boolean | undefined;
 
-  constructor(private router: Router, private platform: Platform, private authService: AuthService, private toastController: ToastController,
+  constructor(private router: Router, private platform: Platform, private hotelesService: HotelesService, private authService: AuthService, private toastController: ToastController,
     @Optional() private routerOutlet?: IonRouterOutlet) {
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if (!this.routerOutlet?.canGoBack()) {
@@ -26,7 +27,8 @@ export class HomePage {
     });
   }
 
-  ngOnInit(){
+  async ngOnInit(){
+    this.hoteles = await this.hotelesService.getHoteles();
     this.authService.usuarioActual().then((user) => {
       if(user){
         const tipoUsuario = user.tipoUsuario

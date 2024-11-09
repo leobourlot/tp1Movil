@@ -17,11 +17,8 @@ import { environment } from 'src/environments/environment';
 export class NuevoHotelPage {
 
   formNuevoHotel: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    clave: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required]),
-    apellido: new FormControl('', [Validators.required]),
-    dni: new FormControl('', [Validators.required])
+    direccion: new FormControl('', [Validators.required]),
   });
 
   constructor(private router: Router, private toastController: ToastController, private authService: AuthService) { }
@@ -39,23 +36,19 @@ export class NuevoHotelPage {
 
   onSubmit() {
     if (this.formNuevoHotel.valid) {
-      const { email, clave, nombre, apellido, dni } = this.formNuevoHotel.value;
+      const {nombre, direccion} = this.formNuevoHotel.value;
 
-      this.authService.registroEmailHotel({
-        email: email,
-        password: clave,
+      this.authService.registroHotel({
         nombre: nombre,
-        apellido: apellido,
-        dni: dni,
-        tipoUsuario: "1"
+        direccion: direccion,
       })
         .then(() => {
-          this.presentToast('Usuario registrado correctamente.', 'success');
-          this.router.navigateByUrl('/login');
+          this.presentToast('Hotel registrado correctamente.', 'success');
+          this.router.navigateByUrl('/tabs/home');
         })
         .catch((error) => {
           console.error('Error al registrar:', error);
-          this.presentToast('Error al registrar el usuario.', 'danger');
+          this.presentToast('Error al registrar el hotel.', 'danger');
         });
     }
   }

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { FirebaseAuthentication, User } from "@capacitor-firebase/authentication";
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from 'src/environments/firebase-config';
-import { getFirestore, getDoc, doc, setDoc } from "firebase/firestore";
+import { getFirestore, getDoc, doc, setDoc, addDoc, collection } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Asegúrate de importar Firebase Storage
+import { HotelesService } from '../hoteles/hoteles.service';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class AuthService {
   db = getFirestore(initializeApp(firebaseConfig));
 
 
-  constructor() { }
+  constructor(private hotelesService: HotelesService) { }
 
   async guardarDatosUsuario(uid: string, params: { nombre: string, apellido: string, dni: string, fotoPerfilUrl?: string, tipoUsuario: string }): Promise<void> {
     try {
@@ -73,29 +74,18 @@ export class AuthService {
     }
   }
 
-  async registroEmailHotel(params: { email: string, password: string, nombre: string, apellido: string, dni: string, tipoUsuario: string }): Promise<User | null> {
-
+  async registroHotel(params: { nombre: string, direccion: string}): Promise<void> {
     try {
-
-      const resultado = await FirebaseAuthentication.createUserWithEmailAndPassword({
-        email: params.email,
-        password: params.password
+  
+      // Llama a la función guardarDatosHotel con los parámetros.
+      await this.hotelesService.guardarDatosHotel({
+        nombre: params.nombre,
+        direccion: params.direccion,
       });
-      const usuario = resultado.user;
-
-      if (usuario) {
-        await this.guardarDatosUsuario(usuario?.uid, {
-          nombre: params.nombre,
-          apellido: params.apellido,
-          dni: params.dni,
-          tipoUsuario: params.tipoUsuario
-        });
-        return usuario;
-      } else {
-        throw new Error('Error: No se pudo obtener el UID del usuario.');
-      }
+  
+      console.log('Hotel registrado correctamente');
     } catch (error) {
-      console.error('Error en registro:', error);
+      console.error('Error registrando hotel:', error);
       throw error;
     }
   }

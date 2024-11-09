@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 import { initializeApp } from 'firebase/app';
-import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getFirestore, setDoc } from 'firebase/firestore';
 import { firebaseConfig } from 'src/environments/firebase-config';
 
 @Injectable({
@@ -13,16 +14,19 @@ export class HotelesService {
 
   constructor() { }
 
-  async guardarDatosHotel(uid: string, params: { nombre: string, direccion: string, fotosHotel?: string[] }): Promise<void> {
+  async guardarDatosHotel(params: { nombre: string, direccion: string}): Promise<void> {
     try {
-      await setDoc(doc(this.db, 'hoteles', uid), {
-        nombre: params.nombre,
-        direccion: params.direccion,        
-        fotosHotel: params.fotosHotel || null,
-        
-      });
+
+    //Obtengo el usuario logueado para almacenar en el hotel el uid del propietario
+    const { user } = await FirebaseAuthentication.getCurrentUser();
+
+    const docRef = await addDoc(collection(this.db, 'hoteles'), {
+      nombre: params.nombre,
+      direccion: params.direccion,
+      uidPropietario: user?.uid
+    });
     } catch (error) {
-      console.error('Error guardando datos en Firestore:', error);
+      console.error('Error guardando datos del hotel en Firestore:', error);
     }
   }
 }

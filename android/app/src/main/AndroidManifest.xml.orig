@@ -10,16 +10,12 @@
         <provider android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
         </provider>
-      <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDI4CVa5OcfR8IMDPWz7A-7JGFImRClWBE"/>
-
-
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDI4CVa5OcfR8IMDPWz7A-7JGFImRClWBE" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!-- Geolocation API -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-feature android:name="android.hardware.location.gps" />

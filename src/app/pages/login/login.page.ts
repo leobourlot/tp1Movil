@@ -48,12 +48,12 @@ export class LoginPage {
     }
   }
 
-  irARegistro() {
-    this.router.navigateByUrl('/registro')
+  RegistrarCliente(tipo: string) {
+    this.router.navigateByUrl('/registro', { state: { tipo } });
   }
   
-  irARegistroHotel() {
-    this.router.navigateByUrl('/registroHotel')
+  RegistrarPropietario(tipo: string) {
+    this.router.navigateByUrl('/registro', { state: { tipo } });
   }
 
 

@@ -61,7 +61,7 @@ export class AuthService {
           nombre: params.nombre,
           apellido: params.apellido,
           dni: params.dni,
-          tipoUsuario: "2"
+          tipoUsuario: params.tipoUsuario
         });
         return usuario;
       } else {
@@ -88,7 +88,7 @@ export class AuthService {
           nombre: params.nombre,
           apellido: params.apellido,
           dni: params.dni,
-          tipoUsuario: "1"
+          tipoUsuario: params.tipoUsuario
         });
         return usuario;
       } else {

@@ -15,6 +15,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class RegistroPage {
 
+  tipo = "1";
+
   formRegistro: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     clave: new FormControl('', [Validators.required]),
@@ -23,7 +25,13 @@ export class RegistroPage {
     dni: new FormControl('', [Validators.required])
   });
 
-  constructor(private router: Router, private toastController: ToastController, private authService: AuthService) { }
+  constructor(private router: Router, private toastController: ToastController, private authService: AuthService) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state && navigation.extras.state['tipo']) {
+      this.tipo = navigation.extras.state['tipo'];
+      console.log('Tipo recibido:', this.tipo); // Para verificar
+    }
+   }
 
   async presentToast(mensaje: string, color: string) {
     const toast = await this.toastController.create({
@@ -46,7 +54,7 @@ export class RegistroPage {
         nombre: nombre,
         apellido: apellido,
         dni: dni,
-        tipoUsuario: "2"
+        tipoUsuario: this.tipo
       })
         .then(() => {
           this.presentToast('Usuario registrado correctamente.', 'success');

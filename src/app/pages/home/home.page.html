@@ -19,6 +19,11 @@
         <ion-button (click)="irANuevoHotel()">Registrar hotel</ion-button>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="esHotel">
+      <ion-col>
+        <ion-button (click)="irAVerMapa()">Ver mapa</ion-button>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col>
         <ion-text color="secondary">

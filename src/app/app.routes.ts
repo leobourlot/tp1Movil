@@ -23,8 +23,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/registro-hotel/registro-hotel.page').then( m => m.RegistroHotelPage)
   },
   {
-    path: 'nuevo-hotel',
+    path: 'nuevoHotel',
     loadComponent: () => import('./pages/nuevo-hotel/nuevo-hotel.page').then( m => m.NuevoHotelPage)
+  },
+  {
+    path: 'maps',
+    loadComponent: () => import('./pages/maps/maps.page').then( m => m.MapsPage)
   },
   
 ];

@@ -48,11 +48,11 @@ export class LoginPage {
     }
   }
 
-  RegistrarCliente(tipo: string) {
+  registrarCliente(tipo: string) {
     this.router.navigateByUrl('/registro', { state: { tipo } });
   }
   
-  RegistrarPropietario(tipo: string) {
+  registrarPropietario(tipo: string) {
     this.router.navigateByUrl('/registro', { state: { tipo } });
   }
 

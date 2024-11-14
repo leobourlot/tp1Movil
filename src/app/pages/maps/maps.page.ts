@@ -1,12 +1,12 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AlertController, IonBackButton, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, ToastController } from '@ionic/angular/standalone';
+import { AlertController, IonBackButton, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, ModalController, ToastController, ViewDidEnter, ViewWillEnter } from '@ionic/angular/standalone';
 import { GoogleMap } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { search, checkmark, add, location } from 'ionicons/icons';
+import { search, checkmark, add, location, arrowBackOutline } from 'ionicons/icons';
 import { SearchComponent } from '../search/search.component'
 import { Point } from 'src/app/interfaces';
 import { Geolocation } from '@capacitor/geolocation';
@@ -17,9 +17,9 @@ import { Geolocation } from '@capacitor/geolocation';
   templateUrl: './maps.page.html',
   styleUrls: ['./maps.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon, SearchComponent]
 })
-export class MapsPage implements OnDestroy {
+export class MapsPage implements ViewDidEnter {
 
 
   @ViewChild('map', {read: ElementRef}) mapRef: ElementRef<HTMLElement> | undefined;
@@ -29,16 +29,20 @@ export class MapsPage implements OnDestroy {
   searchMarkerId: string | undefined = undefined;
 
 
-  constructor(private router: Router, private toastCtl: ToastController, private alertCtrl: AlertController) {
-    addIcons({search,add,location,checkmark});
+  constructor(private router: Router, private toastCtl: ToastController, private alertCtrl: AlertController, private modalCtrl: ModalController) {
+    addIcons({arrowBackOutline,search,add,location,checkmark});
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
+    console.log('ionViewDidEnter llamado');
+
+    // await new Promise(resolve => setTimeout(resolve, 200));
     this.initGoogleMaps();
   }
 
   
   async initGoogleMaps() {
+    // await new Promise(resolve => setTimeout(resolve, 100));
     const hasPermission = await this.checkPermissions();
     if (!hasPermission) {
       console.log('No hay permisos')
@@ -51,6 +55,7 @@ export class MapsPage implements OnDestroy {
       return;
     }
     if (!this.mapRef) {
+      console.log('Error, no hay mapRef')
       const toast = await this.toastCtl.create({
         message: 'Error al cargar el mapa',
         color: 'danger',
@@ -61,6 +66,8 @@ export class MapsPage implements OnDestroy {
     }
     const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
     const { coords: { latitude, longitude } } = position
+    console.log('latitud y longitud son: ', latitude, longitude)
+    console.log('mapref es: ', this.mapRef)
     this.map = await GoogleMap.create({
       id: 'map',
       element: this.mapRef.nativeElement,
@@ -123,6 +130,14 @@ export class MapsPage implements OnDestroy {
     this.searchMarkerId = await this.map?.addMarker({
       coordinate: { lat: coords.lat, lng: coords.lng },
     });
+  }
+
+  cancel() {
+    return this.modalCtrl.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    return this.modalCtrl.dismiss(null, 'confirm');
   }
 
   ngOnDestroy() {

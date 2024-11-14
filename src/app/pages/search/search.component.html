@@ -2,5 +2,6 @@
   show-cancel-button="always"
   (ionCancel)="onClose()"
   [(ngModel)]="direccion"
+  (ngModelChange)="direccionChange.emit($event)"
   (search)="reverseGeocode()"
   show-clear-button="focus"></ion-searchbar>

@@ -20,6 +20,7 @@ export class SearchComponent implements OnInit {
 
   @Output() cancelSearch: EventEmitter<any> = new EventEmitter(undefined);
   @Output() coordinates: EventEmitter<Point> = new EventEmitter<Point>();
+  @Output() direccionChange: EventEmitter<string> = new EventEmitter<string>();
   buscando = false;
   direccion: string | undefined = undefined
 
@@ -46,6 +47,7 @@ export class SearchComponent implements OnInit {
       const address = response.addresses[0];
       const {latitude, longitude} = address
       this.coordinates.emit({lat: latitude, lng: longitude});
+      this.direccionChange.emit(this.direccion);
     }
 
   }

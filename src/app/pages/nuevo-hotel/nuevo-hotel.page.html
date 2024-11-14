@@ -16,12 +16,35 @@
     <form [formGroup]="formNuevoHotel" (ngSubmit)="onSubmit()">
 
       <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre"></ion-input>
-      <ion-input label="Direccion: " labelPlacement="floating" formControlName="direccion" (focus)="onFocusDireccion()"></ion-input>
+      <ion-input label="Direccion: " labelPlacement="floating" formControlName="direccion"></ion-input>
 
-      <app-maps></app-maps>
-      <ion-button class="botonRegistro" id="open-loading" type="submit"
+      <!-- <app-search (coordinates)="guardarCoordenadas($event)" (direccionChange)="formNuevoHotel.controls['direccion'].setValue($event)"></app-search> -->
+      <!-- <app-maps></app-maps> -->
+
+      <ion-button expand="block" (click)="openModal()">Abrir mapa</ion-button>
+      <!-- <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)"> -->
+      <!-- <ng-template> -->
+          <!-- <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="cancel()">Cancelar</ion-button>
+              </ion-buttons>
+              <ion-title>Ubicación del hotel</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <app-maps></app-maps>
+          </ion-content> -->
+        <!-- </ng-template> -->
+      <!-- </ion-modal> -->
+      
+      <ion-button *ngIf="coordenadasListas" class="botonRegistro" id="open-loading" type="submit"
         [disabled]="formNuevoHotel.invalid">Registrar</ion-button>
-      <ion-loading class="custom-loading" trigger="open-loading" message="Validando datos, aguarde un momento."
+      <!-- <ion-button *ngIf="!coordenadasListas" class="botonRegistro" id="open-mapa" type="button">Abrir mapa</ion-button> -->
+      <ion-loading class="custom-loading" trigger="open-mapa" message="Cargando mapa, aguarde un momento."
         duration="1000" spinner="lines-sharp" didDismiss="true"></ion-loading>
 
     </form>

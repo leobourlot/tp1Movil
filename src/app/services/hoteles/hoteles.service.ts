@@ -14,7 +14,7 @@ export class HotelesService {
 
   constructor() { }
 
-  async guardarDatosHotel(params: { nombre: string, direccion: string}): Promise<void> {
+  async guardarDatosHotel(params: { nombre: string, direccion: string, lat: number, lng: number}): Promise<void> {
     try {
 
     //Obtengo el usuario logueado para almacenar en el hotel el uid del propietario
@@ -23,7 +23,9 @@ export class HotelesService {
     const docRef = await addDoc(collection(this.db, 'hoteles'), {
       nombre: params.nombre,
       direccion: params.direccion,
-      uidPropietario: user?.uid
+      uidPropietario: user?.uid,
+      lat: params.lat,
+      lng: params.lng
     });
     } catch (error) {
       console.error('Error guardando datos del hotel en Firestore:', error);

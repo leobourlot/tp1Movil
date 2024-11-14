@@ -2,7 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild, viewC
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonButton, IonLoading, IonInput, IonInputPasswordToggle, IonBackButton, IonIcon, IonModal, IonButtons, IonItem, ModalController } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core/components'
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GoogleMap } from '@capacitor/google-maps';
@@ -35,7 +35,21 @@ export class NuevoHotelPage {
   @ViewChild(IonModal) modal: IonModal | undefined;
   coordenadas: Point | undefined;
 
-  constructor(private router: Router, private toastController: ToastController, private authService: AuthService, private modalCtrl: ModalController) { }
+  constructor(private router: Router, private route: ActivatedRoute, private toastController: ToastController, private authService: AuthService, private modalCtrl: ModalController) { }
+
+  ionViewWillEnter() {
+    this.route.queryParams.subscribe(params => {
+      if (params['lat'] && params['lng']) {
+        this.formNuevoHotel.patchValue({
+          lat: +params['lat'],
+          lng: +params['lng']
+        });
+        console.log('Coordenadas recibidas:', params['lat'], params['lng']);
+      } else {
+        console.log('No hay coordenadas aún');
+      }                       
+    });
+  }
 
   async presentToast(mensaje: string, color: string) {
     const toast = await this.toastController.create({
@@ -98,16 +112,20 @@ export class NuevoHotelPage {
   //   }
   // }
 
-  async openModal() {
-    const modal = await this.modalCtrl.create({
-      component: MapsPage,
-    });
-    modal.present();
+  // async openModal() {
+  //   const modal = await this.modalCtrl.create({
+  //     component: MapsPage,
+  //   });
+  //   modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+  //   const { data, role } = await modal.onWillDismiss();
 
-    if (role === 'confirm') {
-      // this.message = `Hello, ${data}!`;
-    }
+  //   if (role === 'confirm') {
+  //     // this.message = `Hello, ${data}!`;
+  //   }
+  // }
+
+  irAMapa() {
+    this.router.navigateByUrl('/maps');
   }
 }

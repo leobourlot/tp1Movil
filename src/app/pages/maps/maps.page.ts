@@ -130,6 +130,9 @@ export class MapsPage implements ViewDidEnter {
     this.searchMarkerId = await this.map?.addMarker({
       coordinate: { lat: coords.lat, lng: coords.lng },
     });
+    this.router.navigate(['/nuevoHotel'], { 
+      queryParams: { lat: coords.lat, lng: coords.lng }
+    });
   }
 
   cancel() {

@@ -1,0 +1,51 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ng-template #noSearch>
+      <ion-buttons slot="start">
+        <ion-back-button default-href="tabs/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Google Maps</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="toggleSearchBar()">
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-template>
+    <app-search *ngIf="showSearch; else noSearch" (cancelSearch)="toggleSearchBar()"
+      (coordinates)="onNewCoordinates($event)" />
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Ubicación</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-toolbar color="secondary">
+    <ng-template #noSearch>
+      <ion-buttons slot="start">
+        <ion-back-button default-href="tabs/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Google Maps</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="toggleSearchBar()">
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-template>
+    <app-search *ngIf="showSearch; else noSearch" (cancelSearch)="toggleSearchBar()"
+      (coordinates)="onNewCoordinates($event)" />
+  </ion-toolbar>
+  <capacitor-google-map #map></capacitor-google-map>
+</ion-content>
+
+<!-- <ion-content>
+  
+</ion-content> -->

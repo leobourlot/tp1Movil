@@ -32,23 +32,29 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col *ngFor="let hotel of hoteles">
-        <ion-card>
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let hotel of hotelesFicticios">
+        <ion-card class="hotel-card">
+          <swiper-container
+          #swiper
+          [pagination]="true"
+          [zoom]="true"
+        >
+        <swiper-slide *ngFor="let foto of hotel.fotos">
+          <div class="swiper-zoom-container">
+            <img [src]="foto" alt="{{ hotel.nombre }}" />
+          </div>
+        </swiper-slide>
+      </swiper-container>
           <ion-card-header>
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+            <ion-card-title>{{ hotel.nombre }}</ion-card-title>
+            <ion-card-subtitle>{{ hotel.direccion }}</ion-card-subtitle>
           </ion-card-header>
-
           <ion-card-content>
             Here's a small text description for the card content. Nothing more, nothing less.
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <!-- <ion-col>
-        <ion-img src="../../../assets/logo.png" alt="Logo de ConcorSuite" />
-      </ion-col> -->
-
     </ion-row>
+  
   </ion-grid>
 </ion-content>

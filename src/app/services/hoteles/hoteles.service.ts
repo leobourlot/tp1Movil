@@ -14,7 +14,7 @@ export class HotelesService {
 
   constructor() { }
 
-  async guardarDatosHotel(params: { nombre: string, direccion: string, lat: number, lng: number}): Promise<void> {
+  async guardarDatosHotel(params: { nombre: string, direccion: string, descripcion: string, lat: number, lng: number, fotos: File[]}): Promise<void> {
     try {
 
     //Obtengo el usuario logueado para almacenar en el hotel el uid del propietario
@@ -23,6 +23,8 @@ export class HotelesService {
     const docRef = await addDoc(collection(this.db, 'hoteles'), {
       nombre: params.nombre,
       direccion: params.direccion,
+      descripcion: params.descripcion,
+      fotos: params.fotos,
       uidPropietario: user?.uid,
       lat: params.lat,
       lng: params.lng

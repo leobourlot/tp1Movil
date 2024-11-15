@@ -74,15 +74,17 @@ export class AuthService {
     }
   }
 
-  async registroHotel(params: { nombre: string, direccion: string, lat: number, lng: number}): Promise<void> {
+  async registroHotel(params: { nombre: string, direccion: string, descripcion: string, lat: number, lng: number, fotos: File[]}): Promise<void> {
     try {
   
       // Llama a la función guardarDatosHotel con los parámetros.
       await this.hotelesService.guardarDatosHotel({
         nombre: params.nombre,
         direccion: params.direccion,
+        descripcion: params.descripcion,
         lat: params.lat,
-        lng: params.lng
+        lng: params.lng,
+        fotos: params.fotos
       });
   
       console.log('Hotel registrado correctamente');

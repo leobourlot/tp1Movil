@@ -17,6 +17,8 @@
 
       <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre"></ion-input>
       <ion-input label="Direccion: " labelPlacement="floating" formControlName="direccion"></ion-input>
+      <ion-textarea label="Descripción: " labelPlacement="floating" formControlName="descripcion"></ion-textarea>
+      <input type="file" (change)="onFileSelected($event)" multiple />
 
       <!-- <app-search (coordinates)="guardarCoordenadas($event)" (direccionChange)="formNuevoHotel.controls['direccion'].setValue($event)"></app-search> -->
       <!-- <app-maps></app-maps> -->

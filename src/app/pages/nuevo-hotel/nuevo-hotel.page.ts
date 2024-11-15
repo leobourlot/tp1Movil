@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonButton, IonLoading, IonInput, IonInputPasswordToggle, IonBackButton, IonIcon, IonModal, IonButtons, IonItem, ModalController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonButton, IonLoading, IonInput, IonInputPasswordToggle, IonBackButton, IonIcon, IonModal, IonButtons, IonItem, ModalController, IonTextarea } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core/components'
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -17,15 +17,16 @@ import { Point } from 'src/app/interfaces';
   templateUrl: './nuevo-hotel.page.html',
   styleUrls: ['./nuevo-hotel.page.scss'],
   standalone: true,
-  imports: [IonItem, IonButtons, IonModal, IonIcon, IonBackButton, IonLoading, IonButton, IonInput, IonInputPasswordToggle, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, MapsPage, SearchComponent, IonModal]
+  imports: [IonItem, IonButtons, IonModal, IonIcon, IonBackButton, IonLoading, IonButton, IonInput, IonTextarea, IonInputPasswordToggle, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, MapsPage, SearchComponent, IonModal]
 })
 export class NuevoHotelPage {
 
   formNuevoHotel: FormGroup = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
+    descripcion: new FormControl('', Validators.required),
     lat: new FormControl(''),
-    lng: new FormControl('')
+    lng: new FormControl(''),
   });
 
   coordenadasListas: boolean = false
@@ -34,6 +35,8 @@ export class NuevoHotelPage {
 
   @ViewChild(IonModal) modal: IonModal | undefined;
   coordenadas: Point | undefined;
+  images: string[] = []; // Para almacenar las URLs
+  files: File[] = [] ; // Para almacenar los archivos
 
   constructor(private router: Router, private route: ActivatedRoute, private toastController: ToastController, private authService: AuthService, private modalCtrl: ModalController) { }
 
@@ -44,10 +47,12 @@ export class NuevoHotelPage {
           lat: +params['lat'],
           lng: +params['lng']
         });
+        this.coordenadasListas = !this.coordenadasListas
         console.log('Coordenadas recibidas:', params['lat'], params['lng']);
+        console.log('formulario es: ', this.formNuevoHotel)
       } else {
         console.log('No hay coordenadas aún');
-      }                       
+      }
     });
   }
 
@@ -64,15 +69,17 @@ export class NuevoHotelPage {
 
   onSubmit() {
     if (this.formNuevoHotel.valid) {
-      const { nombre, direccion, lat, lng } = this.formNuevoHotel.value;
+      const { nombre, direccion, descripcion, lat, lng } = this.formNuevoHotel.value;
 
       console.log('los valores son: ', nombre, direccion, lat, lng)
 
       this.authService.registroHotel({
         nombre: nombre,
         direccion: direccion,
+        descripcion: descripcion,
         lat: lat,
-        lng: lng
+        lng: lng,
+        fotos: this.files
       })
         .then(() => {
           this.presentToast('Hotel registrado correctamente.', 'success');
@@ -90,6 +97,34 @@ export class NuevoHotelPage {
     this.formNuevoHotel.patchValue({ lat: coords.lat, lng: coords.lng });
     console.log('formulario es: ', this.formNuevoHotel)
   }
+
+  onFileSelected(event: any) {
+    const selectedFiles = event.target.files as FileList;
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      this.files.push(file);
+  
+      // Para previsualizar las imágenes seleccionadas
+      const reader = new FileReader();
+      reader.onload = () => this.images.push(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  }
+
+  async dataUrlToBlob(dataUrl: string): Promise<Blob> {
+    const res = await fetch(dataUrl);
+    return await res.blob();
+  }
+
+  // async uploadImages() {
+  //   const promises = this.files.map((file) => {
+  //     const filePath = `hoteles/${new Date().getTime()}_${file.name}`;
+  //     const fileRef = this.storage.ref(filePath);
+  //     return fileRef.put(file).then(() => fileRef.getDownloadURL().toPromise());
+  //   });
+    
+  //   this.images = await Promise.all(promises);
+  // }
 
   // cancel() {
   //   this.modal?.dismiss(null, 'cancel');

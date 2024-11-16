@@ -101,7 +101,7 @@ export class HomePage {
   }
   
   irAVerMapa() {
-    this.router.navigateByUrl('maps')
+    this.router.navigateByUrl('mapaHoteles')
   }
 
 }

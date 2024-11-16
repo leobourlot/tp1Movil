@@ -18,32 +18,12 @@
       <ion-input label="Nombre: " labelPlacement="floating" formControlName="nombre"></ion-input>
       <ion-input label="Direccion: " labelPlacement="floating" formControlName="direccion"></ion-input>
       <ion-textarea label="Descripción: " labelPlacement="floating" formControlName="descripcion"></ion-textarea>
+      <ion-input label="Precio por noche: " labelPlacement="floating" formControlName="precio"></ion-input>
+      <ion-input label="Teléfono de contacto: " labelPlacement="floating" formControlName="telefono"></ion-input>
       <input type="file" (change)="onFileSelected($event)" multiple />
-
-      <!-- <app-search (coordinates)="guardarCoordenadas($event)" (direccionChange)="formNuevoHotel.controls['direccion'].setValue($event)"></app-search> -->
-      <!-- <app-maps></app-maps> -->
-
-      <ion-button expand="block" (click)="irAMapa()">Abrir mapa</ion-button>
-      <!-- <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)"> -->
-      <!-- <ng-template> -->
-          <!-- <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-button (click)="cancel()">Cancelar</ion-button>
-              </ion-buttons>
-              <ion-title>Ubicación del hotel</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-padding">
-            <app-maps></app-maps>
-          </ion-content> -->
-        <!-- </ng-template> -->
-      <!-- </ion-modal> -->
       
-      <ion-button *ngIf="coordenadasListas" class="botonRegistro" id="open-loading" type="submit"
+      <ion-button expand="block" (click)="irAMapa()">Abrir mapa</ion-button>
+      <ion-button [disabled]="formNuevoHotel.invalid" class="botonRegistro" id="open-loading" type="submit"
         [disabled]="formNuevoHotel.invalid">Registrar</ion-button>
       <!-- <ion-button *ngIf="!coordenadasListas" class="botonRegistro" id="open-mapa" type="button">Abrir mapa</ion-button> -->
       <ion-loading class="custom-loading" trigger="open-mapa" message="Cargando mapa, aguarde un momento."

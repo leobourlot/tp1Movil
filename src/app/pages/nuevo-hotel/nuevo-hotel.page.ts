@@ -1,15 +1,12 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonButton, IonLoading, IonInput, IonInputPasswordToggle, IonBackButton, IonIcon, IonModal, IonButtons, IonItem, ModalController, IonTextarea } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OverlayEventDetail } from '@ionic/core/components'
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { GoogleMap } from '@capacitor/google-maps';
-import { environment } from 'src/environments/environment';
 import { MapsPage } from '../maps/maps.page';
 import { SearchComponent } from '../search/search.component';
 import { Point } from 'src/app/interfaces';
+import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 
 
 @Component({
@@ -24,7 +21,9 @@ export class NuevoHotelPage {
   formNuevoHotel: FormGroup = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', Validators.required),
+    descripcion: new FormControl('', [Validators.required]),
+    precio: new FormControl('', [Validators.required]),
+    telefono: new FormControl('', [Validators.required]),
     lat: new FormControl(''),
     lng: new FormControl(''),
   });
@@ -33,12 +32,11 @@ export class NuevoHotelPage {
 
   @ViewChild(MapsPage) mapsComponent: MapsPage | undefined;
 
-  @ViewChild(IonModal) modal: IonModal | undefined;
   coordenadas: Point | undefined;
-  images: string[] = []; // Para almacenar las URLs
-  files: File[] = [] ; // Para almacenar los archivos
+  images: string[] = []; 
+  files: File[] = [] ; 
 
-  constructor(private router: Router, private route: ActivatedRoute, private toastController: ToastController, private authService: AuthService, private modalCtrl: ModalController) { }
+  constructor(private router: Router, private route: ActivatedRoute, private toastController: ToastController, private hotelesService: HotelesService, private modalCtrl: ModalController) { }
 
   ionViewWillEnter() {
     this.route.queryParams.subscribe(params => {
@@ -69,14 +67,16 @@ export class NuevoHotelPage {
 
   onSubmit() {
     if (this.formNuevoHotel.valid) {
-      const { nombre, direccion, descripcion, lat, lng } = this.formNuevoHotel.value;
+      const { nombre, direccion, descripcion, lat, lng, precio, telefono } = this.formNuevoHotel.value;
 
       console.log('los valores son: ', nombre, direccion, lat, lng)
 
-      this.authService.registroHotel({
+      this.hotelesService.guardarDatosHotel({
         nombre: nombre,
         direccion: direccion,
         descripcion: descripcion,
+        precio: precio,
+        telefono: telefono,
         lat: lat,
         lng: lng,
         fotos: this.files
@@ -104,7 +104,6 @@ export class NuevoHotelPage {
       const file = selectedFiles[i];
       this.files.push(file);
   
-      // Para previsualizar las imágenes seleccionadas
       const reader = new FileReader();
       reader.onload = () => this.images.push(reader.result as string);
       reader.readAsDataURL(file);
@@ -115,50 +114,6 @@ export class NuevoHotelPage {
     const res = await fetch(dataUrl);
     return await res.blob();
   }
-
-  // async uploadImages() {
-  //   const promises = this.files.map((file) => {
-  //     const filePath = `hoteles/${new Date().getTime()}_${file.name}`;
-  //     const fileRef = this.storage.ref(filePath);
-  //     return fileRef.put(file).then(() => fileRef.getDownloadURL().toPromise());
-  //   });
-    
-  //   this.images = await Promise.all(promises);
-  // }
-
-  // cancel() {
-  //   this.modal?.dismiss(null, 'cancel');
-  // }
-
-  // confirm() {
-  //   this.modal?.dismiss(this.coordenadas, 'confirm');
-  // }
-
-  // onWillDismiss(event: Event) {
-  //   const ev = event as CustomEvent<OverlayEventDetail<Point>>;
-  //   if (ev.detail.role === 'confirm' && ev.detail.data) {
-  //     // Asegura que el valor sea un objeto Point antes de asignarlo
-  //     const coords = ev.detail.data;
-  //     if (typeof coords === 'object' && 'lat' in coords && 'lng' in coords) {
-  //       this.coordenadas = coords;
-  //     } else {
-  //       console.error('Error: las coordenadas no son del tipo esperado.');
-  //     }
-  //   }
-  // }
-
-  // async openModal() {
-  //   const modal = await this.modalCtrl.create({
-  //     component: MapsPage,
-  //   });
-  //   modal.present();
-
-  //   const { data, role } = await modal.onWillDismiss();
-
-  //   if (role === 'confirm') {
-  //     // this.message = `Hello, ${data}!`;
-  //   }
-  // }
 
   irAMapa() {
     this.router.navigateByUrl('/maps');

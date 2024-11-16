@@ -26,5 +26,10 @@ export const routes: Routes = [
     path: 'maps',
     loadComponent: () => import('./pages/maps/maps.page').then( m => m.MapsPage)
   },
+  {
+    path: 'mapaHoteles',
+    loadComponent: () => import('./pages/mapa-hoteles/mapa-hoteles.page').then( m => m.MapaHotelesPage)
+  },
+
     
 ];

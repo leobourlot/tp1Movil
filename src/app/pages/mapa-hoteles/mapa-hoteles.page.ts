@@ -10,27 +10,28 @@ import { search, checkmark, add, location, arrowBackOutline } from 'ionicons/ico
 import { SearchComponent } from '../search/search.component'
 import { Point } from 'src/app/interfaces';
 import { Geolocation } from '@capacitor/geolocation';
+import { collection, Firestore, getDocs } from 'firebase/firestore';
+import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 
 @Component({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: 'app-maps',
-  templateUrl: './maps.page.html',
-  styleUrls: ['./maps.page.scss'],
+  templateUrl: './mapa-hoteles.page.html',
+  styleUrls: ['./mapa-hoteles.page.scss'],
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon, SearchComponent]
 })
-export class MapsPage implements ViewDidEnter {
+export class MapaHotelesPage implements ViewDidEnter {
 
 
-  @ViewChild('map', { read: ElementRef }) mapRef: ElementRef<HTMLElement> | undefined;
+  @ViewChild('mapHoteles', { read: ElementRef }) mapRef: ElementRef<HTMLElement> | undefined;
 
   map: GoogleMap | undefined;
-  showSearch: boolean = false;
   searchMarkerId: string | undefined = undefined;
-  ubicacionCorrecta: boolean = false
+  hoteles: any[] = [];
 
 
-  constructor(private router: Router, private toastCtl: ToastController, private alertCtrl: AlertController, private modalCtrl: ModalController) {
+  constructor(private router: Router, private toastCtl: ToastController, private hotelesService: HotelesService) {
     addIcons({ arrowBackOutline, search, add, location, checkmark });
   }
 
@@ -38,12 +39,11 @@ export class MapsPage implements ViewDidEnter {
     console.log('ionViewDidEnter llamado');
 
     // await new Promise(resolve => setTimeout(resolve, 200));
+    this.hoteles = await this.hotelesService.cargarHoteles();
     this.initGoogleMaps();
   }
 
-
   async initGoogleMaps() {
-    // await new Promise(resolve => setTimeout(resolve, 100));
     const hasPermission = await this.checkPermissions();
     if (!hasPermission) {
       console.log('No hay permisos')
@@ -65,22 +65,30 @@ export class MapsPage implements ViewDidEnter {
       await toast.present();
       return;
     }
-    const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
-    const { coords: { latitude, longitude } } = position
-    console.log('latitud y longitud son: ', latitude, longitude)
-    console.log('mapref es: ', this.mapRef)
+
     this.map = await GoogleMap.create({
-      id: 'map',
+      id: 'mapHoteles',
       element: this.mapRef.nativeElement,
       apiKey: environment.googleMapsKey,
       config: {
         center: {
-          lat: latitude,
-          lng: longitude,
+          lat: -31.389824,
+          lng: -58.016186,
         },
-        zoom: 13,
+        zoom: 17,
       },
     });
+    for (const hotel of this.hoteles) {
+      console.log('hoteles es: ', this.hoteles)
+      if (hotel.lat && hotel.lng) {
+        await this.map.addMarker({
+          coordinate: { lat: hotel.lat, lng: hotel.lng },
+          title: hotel.nombre,
+          snippet: hotel.precio,          
+        });
+        console.log('marcador añadido')
+      }
+    }
     console.log("Mapa creado exitosamente:", this.map);
   }
 
@@ -96,46 +104,6 @@ export class MapsPage implements ViewDidEnter {
     return permissions.location === 'granted' && permissions.coarseLocation === 'granted'
   }
   
-  toggleSearchBar() {
-    this.showSearch = !this.showSearch;
-  }
-
-  async onNewCoordinates(coords: Point) {
-    console.log('Received coordinates:', coords); // Verificar que coords sea de tipo Point
-    this.map?.setCamera({
-      coordinate: { lat: coords.lat, lng: coords.lng },
-      zoom: 18
-    });
-    this.searchMarkerId = await this.map?.addMarker({
-      coordinate: { lat: coords.lat, lng: coords.lng },
-    });
-    const alert = await this.alertCtrl.create({
-      header: 'Confirmación',
-      message: '¿Es correcta la ubicación ingresada?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            console.log('Operación cancelada');
-          },
-        },
-        {
-          text: 'Confirmar',
-          handler: () => {
-            this.router.navigate(['/nuevoHotel'], {
-              queryParams: { lat: coords.lat, lng: coords.lng }
-            });
-          },
-        },
-      ],
-    });
-
-    await alert.present();
-
-
-  }
-
   ngOnDestroy() {
     this.map?.removeAllMapListeners();
   }

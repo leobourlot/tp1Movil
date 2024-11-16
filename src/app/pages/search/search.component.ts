@@ -36,9 +36,11 @@ export class SearchComponent implements OnInit {
       return;
     }
     this.buscando = true;
+
+    const direccionConcordia = this.direccion ? `${this.direccion}, Concordia` : 'Concordia'
     const response = await NativeGeocoder.forwardGeocode({
       apiKey: environment.googleMapsKey,
-      addressString: this.direccion ? this.direccion : '',
+      addressString: direccionConcordia,
       useLocale: true,
       defaultLocale: 'es_AR'
     })

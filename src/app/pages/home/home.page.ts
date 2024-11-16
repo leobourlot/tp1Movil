@@ -23,35 +23,6 @@ export class HomePage {
   swiper?: Swiper;
 
 
-  hotelesFicticios = [
-    {
-      nombre: 'Hotel A',
-      direccion: '123 Main St',
-      fotos: [
-        'https://images.unsplash.com/photo-1580927752452-89d86da3fa0a',
-        'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
-        'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
-        'https://images.unsplash.com/photo-1488229297570-58520851e868'
-      ]
-    },
-    {
-      nombre: 'Hotel B',
-      direccion: '456 Broadway Ave',
-      fotos: [
-        'https://ionicframework.com/docs/img/demos/card-media.png',
-        'https://images.unsplash.com/photo-1580927752452-89d86da3fa0a',
-        'https://images.unsplash.com/photo-1498050108023-c5249f4df085'
-      ]
-    },
-    {
-      nombre: 'Hotel C',
-      direccion: '789 Ocean Blvd',
-      fotos: [
-        'https://images.unsplash.com/photo-1488229297570-58520851e868'
-      ]
-    }
-  ];
-
   constructor(private router: Router, private platform: Platform, private hotelesService: HotelesService, private authService: AuthService, private toastController: ToastController,
     @Optional() private routerOutlet?: IonRouterOutlet) {
     this.platform.backButton.subscribeWithPriority(-1, () => {

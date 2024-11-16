@@ -77,7 +77,7 @@ export class HotelesService {
 
       const hotelesRef = collection(this.db, 'hoteles');
 
-      const q = query(hotelesRef, where('uidPropietario', '==', uid));
+      const q = query(hotelesRef, where('uidPropietario', '!=', 1));
 
       const querySnapshot = await getDocs(q);
 

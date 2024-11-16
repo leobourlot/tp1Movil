@@ -15,7 +15,7 @@ export class HotelesService {
 
   constructor() { }
 
-  async guardarDatosHotel(params: { nombre: string, direccion: string, descripcion: string, lat: number, precio: number, telefono: string, lng: number, fotos: File[] }): Promise<void> {
+  async guardarDatosHotel(params: { nombre: string, direccion: string, descripcion: string, lat: number, precio: string, telefono: string, lng: number, fotos: File[] }): Promise<void> {
     try {
 
       //Obtengo el usuario logueado para almacenar en el hotel el uid del propietario

@@ -74,7 +74,7 @@ export class AuthService {
     }
   }
 
-  async registroHotel(params: { nombre: string, direccion: string, descripcion: string, lat: number, lng: number, precio: number, telefono: string, fotos: File[]}): Promise<void> {
+  async registroHotel(params: { nombre: string, direccion: string, descripcion: string, lat: number, lng: number, precio: string, telefono: string, fotos: File[]}): Promise<void> {
     try {
   
       // Llama a la función guardarDatosHotel con los parámetros.

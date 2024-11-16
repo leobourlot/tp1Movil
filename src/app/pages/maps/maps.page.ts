@@ -65,20 +65,17 @@ export class MapsPage implements ViewDidEnter {
       await toast.present();
       return;
     }
-    const position = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
-    const { coords: { latitude, longitude } } = position
-    console.log('latitud y longitud son: ', latitude, longitude)
-    console.log('mapref es: ', this.mapRef)
+    
     this.map = await GoogleMap.create({
       id: 'map',
       element: this.mapRef.nativeElement,
       apiKey: environment.googleMapsKey,
       config: {
         center: {
-          lat: latitude,
-          lng: longitude,
+          lat: -31.389824,
+          lng: -58.016186,
         },
-        zoom: 13,
+        zoom: 16,
       },
     });
     console.log("Mapa creado exitosamente:", this.map);

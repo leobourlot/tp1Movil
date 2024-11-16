@@ -12,6 +12,7 @@ import { Point } from 'src/app/interfaces';
 import { Geolocation } from '@capacitor/geolocation';
 import { collection, Firestore, getDocs } from 'firebase/firestore';
 import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
+import { TrasladosService } from 'src/app/services/traslados/traslados.service';
 
 @Component({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -29,9 +30,10 @@ export class MapaHotelesPage implements ViewDidEnter {
   map: GoogleMap | undefined;
   searchMarkerId: string | undefined = undefined;
   hoteles: any[] = [];
+  traslados: any[] = [];
 
 
-  constructor(private router: Router, private toastCtl: ToastController, private hotelesService: HotelesService) {
+  constructor(private router: Router, private toastCtl: ToastController, private hotelesService: HotelesService, private trasladosService: TrasladosService) {
     addIcons({ arrowBackOutline, search, add, location, checkmark });
   }
 
@@ -40,6 +42,7 @@ export class MapaHotelesPage implements ViewDidEnter {
 
     // await new Promise(resolve => setTimeout(resolve, 200));
     this.hoteles = await this.hotelesService.cargarHoteles();
+    this.traslados = await this.trasladosService.cargarTraslados();
     this.initGoogleMaps();
   }
 
@@ -75,7 +78,7 @@ export class MapaHotelesPage implements ViewDidEnter {
           lat: -31.389824,
           lng: -58.016186,
         },
-        zoom: 17,
+        zoom: 16,
       },
     });
     for (const hotel of this.hoteles) {
@@ -84,11 +87,25 @@ export class MapaHotelesPage implements ViewDidEnter {
         await this.map.addMarker({
           coordinate: { lat: hotel.lat, lng: hotel.lng },
           title: hotel.nombre,
-          snippet: hotel.precio,          
+          snippet: hotel.precio,
         });
         console.log('marcador añadido')
       }
     }
+    try {
+      for (const traslado of this.traslados) {
+        console.log('traslados es: ', this.traslados)
+        if (traslado.lat && traslado.lng) {
+          await this.map.addMarker({
+            coordinate: { lat: traslado.lat, lng: traslado.lng },
+            title: traslado.nombre,
+          });
+          console.log('marcador añadido')
+        }
+      }
+    } catch (error) {
+      console.log('error al cargar traslados', error)
+    };
     console.log("Mapa creado exitosamente:", this.map);
   }
 
@@ -103,7 +120,7 @@ export class MapaHotelesPage implements ViewDidEnter {
     }
     return permissions.location === 'granted' && permissions.coarseLocation === 'granted'
   }
-  
+
   ngOnDestroy() {
     this.map?.removeAllMapListeners();
   }

@@ -75,7 +75,7 @@ export class NuevoHotelPage {
         nombre: nombre,
         direccion: direccion,
         descripcion: descripcion,
-        precio: precio,
+        precio: `$ ${precio}`,
         telefono: telefono,
         lat: lat,
         lng: lng,

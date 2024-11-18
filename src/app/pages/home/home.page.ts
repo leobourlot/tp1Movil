@@ -7,6 +7,7 @@ import { App } from '@capacitor/app';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 import { Swiper } from 'swiper';
+import { Hotel } from 'src/app/interfaces';
 
 @Component({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -17,7 +18,7 @@ import { Swiper } from 'swiper';
   imports: [IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonCol, IonRow, IonGrid, IonImg, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText, NgIf]
 })
 export class HomePage {
-  hoteles: any[] = [];
+  hoteles: Hotel[] = [];
   esHotel: boolean | undefined;
   @ViewChild('swiper')
   swiper?: Swiper;
@@ -32,22 +33,22 @@ export class HomePage {
     });
   }
 
-  async ngOnInit(){
+  async ngOnInit() {
     this.hoteles = await this.hotelesService.getHoteles();
     console.log(this.hoteles);
     this.authService.usuarioActual().then((user) => {
-      if(user){
+      if (user) {
         const tipoUsuario = user.tipoUsuario
 
-        if(tipoUsuario === "1"){
+        if (tipoUsuario === "1") {
           this.esHotel = true
-        } else{
+        } else {
           this.esHotel = false
         }
 
       }
     })
-    
+
   }
 
   async presentToast(mensaje: string, color: string) {
@@ -57,7 +58,7 @@ export class HomePage {
       position: 'top',
       color: color,
     });
-    
+
     await toast.present();
   }
 
@@ -70,7 +71,13 @@ export class HomePage {
   irANuevoHotel() {
     this.router.navigateByUrl('nuevoHotel')
   }
-  
+
+  irAPaginaHotel(hotel: Hotel) {
+    console.log(hotel); // Verifica el contenido del objeto hotel
+
+    this.router.navigateByUrl(`paginaHotel/${hotel.uid}`)
+  }
+
   irAVerMapa() {
     this.router.navigateByUrl('mapaHoteles')
   }

@@ -29,6 +29,15 @@ export const routes: Routes = [
   {
     path: 'mapaHoteles',
     loadComponent: () => import('./pages/mapa-hoteles/mapa-hoteles.page').then( m => m.MapaHotelesPage)
+  },
+  {
+    path: 'mapaHotel/:idHotel',
+    loadComponent: () => import('./pages/mapa-hotel/mapa-hotel.page').then( m => m.MapaHotelPage)
+  },
+  {
+    path: 'paginaHotel/:idHotel',
+    loadComponent: () => import('./pages/pagina-hotel/pagina-hotel.page').then( m => m.PaginaHotelPage)
   }
+
     
 ];

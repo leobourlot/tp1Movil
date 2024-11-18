@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="hotel">{{hotel.nombre}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="hotel" [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h1>
+          {{hotel.nombre}}
+        </h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <swiper-container #swiper [pagination]="true" [zoom]="true">
+          <swiper-slide *ngFor="let foto of hotel.fotos">
+            <div class="swiper-zoom-container">
+              <img [src]="foto" alt="{{ hotel.nombre }}" />
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </ion-col>
+    </ion-row>
+    <ion-col>
+      <ion-row>
+        <p>{{hotel.descripcion}}</p>
+      </ion-row>
+    </ion-col>
+    <ion-row>
+      <ion-col>
+        <p>Precio por noche: <strong>{{hotel.precio}}</strong></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>Dirección: {{hotel.direccion}}, Concordia, Entre Ríos</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <ion-button color="secondary" (click)="irAMapaHotel(hotel)">Ver en el mapa</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h6>Por consultas o reservas, comunicarse al teléfono Nº {{hotel.telefono}}</h6>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <p *ngIf="hotel">Es el hotel {{hotel.descripcion}} </p> -->
+  
+</ion-content>

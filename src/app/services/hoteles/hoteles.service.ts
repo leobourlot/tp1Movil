@@ -73,20 +73,34 @@ export class HotelesService {
     const { user } = await FirebaseAuthentication.getCurrentUser();
 
     if (user) {
-      const uid = user.uid;
+      // const uid = user.uid;
 
       const hotelesRef = collection(this.db, 'hoteles');
 
-      const q = query(hotelesRef, where('uidPropietario', '!=', 1));
+      // const q = query(hotelesRef, where('uidPropietario', '!=', 1));
 
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(hotelesRef);
 
-      const hoteles = querySnapshot.docs.map(doc => doc.data());
-
-      console.log(hoteles);
+      const hoteles = querySnapshot.docs.map(doc => {
+        const data = doc.data()
+        return { ...data, uid: doc.id }
+      });
+      console.log('hoteles en service es: ', hoteles);
       return hoteles;
     }
     return [];
+  }
+
+  async obtenerHotelPorId(id: string): Promise<any> {
+    const docRef = doc(this.db, 'hoteles', id);
+    const docSnapShot = await getDoc(docRef);
+    if (docSnapShot.exists()){
+      return {id: docSnapShot.id, ...docSnapShot.data()};
+    } else{
+      throw new Error ('No se encontró el hotel seleccionado.')
+    }
+    // const hoteles = await this.getHoteles();
+    // return hoteles.find((hotel: any) => hotel.id === id);
   }
 
   async cargarHoteles() {
@@ -98,10 +112,10 @@ export class HotelesService {
       const hoteles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       return hoteles
     }
-    else{
+    else {
       return []
     }
-    
+
   }
 
 }

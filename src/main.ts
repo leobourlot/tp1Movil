@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage-angular';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { firebaseConfig } from './environments/firebase-config'
+import { environment } from './environments/environment'
 
 
 // Inicializa Firebase

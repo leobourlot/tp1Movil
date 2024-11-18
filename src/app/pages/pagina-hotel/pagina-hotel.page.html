@@ -44,7 +44,16 @@
     </ion-row>
     <ion-row>
       <ion-col>
-          <ion-button color="secondary" (click)="irAMapaHotel(hotel)">Ver en el mapa</ion-button>
+        <ion-button color="secondary" (click)="irAMapaHotel(hotel)">Ver en el mapa</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div>
+          <p>¿Necesitas traslado desde el Aeropuerto o Terminal de ómnibus?</p>
+          <p>Costo desde Aeropuerto: ${{this.costoAeropuerto}} </p>
+          <p>Costo desde Terminal de ómnibus: ${{this.costoTerminal}}</p>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -55,5 +64,5 @@
   </ion-grid>
 
   <!-- <p *ngIf="hotel">Es el hotel {{hotel.descripcion}} </p> -->
-  
+
 </ion-content>

@@ -3,14 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button default-href="tabs/home"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="hotel">{{hotel.nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="hotel" [fullscreen]="true">
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col class="title-hotel">
         <h1>
           {{hotel.nombre}}
         </h1>
@@ -34,7 +33,12 @@
     </ion-col>
     <ion-row>
       <ion-col>
-        <p>Precio por noche: <strong>{{hotel.precio}}</strong></p>
+        <p class="precio-noche">Precio por noche desde: <br /> $<strong>{{hotel.precio}}</strong></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button  expand="full" color="secondary" (click)="irAMapaHotel(hotel)">Ver en el mapa</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -44,15 +48,10 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button color="secondary" (click)="irAMapaHotel(hotel)">Ver en el mapa</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <div>
-          <p>¿Necesitas traslado desde el Aeropuerto o Terminal de ómnibus?</p>
-          <p>Costo desde Aeropuerto: ${{this.costoAeropuerto}} </p>
-          <p>Costo desde Terminal de ómnibus: ${{this.costoTerminal}}</p>
+        <div class="traslados-container">
+          <p class="traslados">¿Necesitas traslado desde el Aeropuerto o Terminal de ómnibus?</p>
+          <p>Costo desde Aeropuerto: <strong>${{this.costoAeropuerto}}</strong></p>
+          <p>Costo desde Terminal de ómnibus: <strong>${{this.costoTerminal}}</strong></p>
         </div>
       </ion-col>
     </ion-row>

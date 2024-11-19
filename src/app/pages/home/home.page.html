@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="toolbarHome">
-    <ion-title>Home</ion-title>
+    <ion-title></ion-title>
     <ion-button class="botonCerrarSesion" slot="end" (click)="cerrarSesion()">Cerrar sesión</ion-button>
   </ion-toolbar>
 </ion-header>
@@ -21,12 +21,12 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button color="secondary" (click)="irAVerMapa()">Ver mapa de hoteles</ion-button>
+        <ion-button expand="full" (click)="irAVerMapa()">Ver mapa de hoteles</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-text color="secondary">
+        <ion-text color="secondary" class="ofertas">
           <h2>Ofertas de alojamiento</h2>
         </ion-text>
       </ion-col>

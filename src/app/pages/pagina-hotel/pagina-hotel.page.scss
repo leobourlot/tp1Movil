@@ -8,3 +8,61 @@ img {
 .costoTraslado{
     --background: aqua;
 }
+
+.title-hotel{
+    text-align: center;
+}
+
+.traslados{
+    text-align: center; 
+    margin-bottom: 30px;
+}
+
+h6 {
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+  }
+
+  .precio-noche {
+    text-align: center;
+    font-size: 16px; 
+    color: #888; 
+    margin-bottom: 10px;  
+  }
+  
+  .precio-noche strong {
+    font-size: 24px;  
+    color: #333;  
+  }
+
+
+  .traslados-container {
+    background-color: #ffffff;  
+    border-radius: 8px;  
+    padding: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-top: 20px;  
+    margin-bottom: 20px;  
+  }
+  
+  .traslados {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;  
+    margin-bottom: 10px; 
+  }
+  
+  .traslados-container p {
+    font-size: 14px; 
+    color: #555;  
+    line-height: 1.6;  
+    margin-bottom: 8px;  
+  }
+  
+  .traslados-container strong {
+    font-size: 16px;  
+    color: #333; 
+  }

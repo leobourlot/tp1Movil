@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonGrid, IonRow, IonCol, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonGrid, IonRow, IonCol, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 import { Swiper } from 'swiper';
@@ -13,7 +13,7 @@ import { TrasladosService } from 'src/app/services/traslados/traslados.service';
   templateUrl: './pagina-hotel.page.html',
   styleUrls: ['./pagina-hotel.page.scss'],
   standalone: true,
-  imports: [IonCol, IonRow, IonGrid, IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonCol, IonRow, IonGrid, IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonIcon]
 })
 export class PaginaHotelPage implements OnInit {
 

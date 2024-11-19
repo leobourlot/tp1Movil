@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonBackButton, IonIcon, IonButton, IonInput, IonInputPasswordToggle, ToastController, IonLoading } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-registro',
@@ -29,9 +29,9 @@ export class RegistroPage {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state && navigation.extras.state['tipo']) {
       this.tipo = navigation.extras.state['tipo'];
-      console.log('Tipo recibido:', this.tipo); // Para verificar
+      console.log('Tipo recibido:', this.tipo); 
     }
-   }
+  }
 
   async presentToast(mensaje: string, color: string) {
     const toast = await this.toastController.create({
@@ -58,12 +58,45 @@ export class RegistroPage {
       })
         .then(() => {
           this.presentToast('Usuario registrado correctamente.', 'success');
+          this.notificacionRegistro()
           this.router.navigateByUrl('/login');
         })
         .catch((error) => {
           console.error('Error al registrar:', error);
           this.presentToast('Error al registrar el usuario.', 'danger');
         });
+    }
+  }
+
+  async notificacionRegistro() {
+    const hasPermissions = await LocalNotifications.checkPermissions();
+    if (hasPermissions.display !== 'granted') {
+      await LocalNotifications.requestPermissions();
+    }
+    if (this.tipo === '1') {
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: 'Bienvenido a ConcorSuite',
+            body: 'Esperamos que muchos puedan disfrutar de su hotel. Gracias por confiar en nosotros.',
+            id: 1,
+
+            schedule: { at: new Date(Date.now() + 1000 * 3) }
+          }
+        ]
+      });
+    } else if (this.tipo === '2') {
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: 'Bienvenido a ConcorSuite',
+            body: 'Esperamos que disfrute de su estadía en Concordia. Gracias por confiar en nosotros.',
+            id: 2,
+
+            schedule: { at: new Date(Date.now() + 1000 * 3) }
+          }
+        ]
+      });
     }
   }
 }

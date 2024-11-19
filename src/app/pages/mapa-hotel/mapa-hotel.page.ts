@@ -1,16 +1,14 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AlertController, IonBackButton, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, ModalController, ToastController, ViewDidEnter, ViewWillEnter } from '@ionic/angular/standalone';
+import { IonBackButton, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, ToastController } from '@ionic/angular/standalone';
 import { GoogleMap } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { search, checkmark, add, location, arrowBackOutline } from 'ionicons/icons';
 import { SearchComponent } from '../search/search.component'
-import { Point } from 'src/app/interfaces';
 import { Geolocation } from '@capacitor/geolocation';
-import { collection, Firestore, getDocs } from 'firebase/firestore';
 import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 import { TrasladosService } from 'src/app/services/traslados/traslados.service';
 
@@ -36,9 +34,6 @@ export class MapaHotelPage implements OnInit {
   }
 
   ngOnInit() {
-    // console.log('ionViewDidEnter llamado');
-
-    // await new Promise(resolve => setTimeout(resolve, 200));
     const idHotel = this.route.snapshot.paramMap.get('idHotel');
     console.log('idHotel es: ', idHotel)
     if (idHotel) {
@@ -108,7 +103,7 @@ export class MapaHotelPage implements OnInit {
   async checkPermissions() {
     let permissions = await Geolocation.checkPermissions();
     if (permissions.location !== 'granted' || permissions.coarseLocation !== 'granted') {
-      permissions = await Geolocation.requestPermissions(); // Solicitar permisos si no están concedidos
+      permissions = await Geolocation.requestPermissions(); 
     }
     return permissions.location === 'granted' && permissions.coarseLocation === 'granted'
   }

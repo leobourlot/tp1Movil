@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonButton, IonLoading, IonInput, IonInputPasswordToggle, IonBackButton, IonIcon, IonModal, IonButtons, IonItem, ModalController, IonTextarea } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonButton, IonLoading, IonInput, IonInputPasswordToggle, IonBackButton, IonIcon, IonButtons, IonItem, IonTextarea } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MapsPage } from '../maps/maps.page';
 import { SearchComponent } from '../search/search.component';
 import { Point } from 'src/app/interfaces';
 import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
   templateUrl: './nuevo-hotel.page.html',
   styleUrls: ['./nuevo-hotel.page.scss'],
   standalone: true,
-  imports: [IonItem, IonButtons, IonModal, IonIcon, IonBackButton, IonLoading, IonButton, IonInput, IonTextarea, IonInputPasswordToggle, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, MapsPage, SearchComponent, IonModal]
+  imports: [IonItem, IonButtons, IonIcon, IonBackButton, IonLoading, IonButton, IonInput, IonTextarea, IonInputPasswordToggle, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, MapsPage, SearchComponent]
 })
 export class NuevoHotelPage {
 
@@ -33,10 +34,10 @@ export class NuevoHotelPage {
   @ViewChild(MapsPage) mapsComponent: MapsPage | undefined;
 
   coordenadas: Point | undefined;
-  images: string[] = []; 
-  files: File[] = [] ; 
+  images: string[] = [];
+  files: File[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private toastController: ToastController, private hotelesService: HotelesService, private modalCtrl: ModalController) { }
+  constructor(private router: Router, private route: ActivatedRoute, private toastController: ToastController, private hotelesService: HotelesService) { }
 
   ionViewWillEnter() {
     this.route.queryParams.subscribe(params => {
@@ -83,6 +84,7 @@ export class NuevoHotelPage {
       })
         .then(() => {
           this.presentToast('Hotel registrado correctamente.', 'success');
+          this.notificacionNuevoHotel();
           this.router.navigateByUrl('/tabs/home');
         })
         .catch((error) => {
@@ -103,7 +105,7 @@ export class NuevoHotelPage {
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       this.files.push(file);
-  
+
       const reader = new FileReader();
       reader.onload = () => this.images.push(reader.result as string);
       reader.readAsDataURL(file);
@@ -117,5 +119,24 @@ export class NuevoHotelPage {
 
   irAMapa() {
     this.router.navigateByUrl('/maps');
+  }
+
+  async notificacionNuevoHotel() {
+    const hasPermissions = await LocalNotifications.checkPermissions();
+    if (hasPermissions.display !== 'granted') {
+      await LocalNotifications.requestPermissions();
+    }
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: '¡Hotel registrado!',
+          body: '¡Gracias por registrar tu hotel en nuestra app!',
+          id: 1,
+
+          schedule: { at: new Date(Date.now() + 1000 * 3) }
+        }
+      ]
+    });
+
   }
 }

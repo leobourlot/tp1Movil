@@ -73,7 +73,7 @@ export class HomePage {
   }
 
   irAPaginaHotel(hotel: Hotel) {
-    console.log(hotel); // Verifica el contenido del objeto hotel
+    console.log(hotel);
 
     this.router.navigateByUrl(`paginaHotel/${hotel.uid}`)
   }

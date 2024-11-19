@@ -18,14 +18,12 @@ export class HotelesService {
   async guardarDatosHotel(params: { nombre: string, direccion: string, descripcion: string, lat: number, precio: string, telefono: string, lng: number, fotos: File[] }): Promise<void> {
     try {
 
-      //Obtengo el usuario logueado para almacenar en el hotel el uid del propietario
       const { user } = await FirebaseAuthentication.getCurrentUser();
 
       if (!user?.uid) {
         throw new Error('No se encontró un usuario autenticado.');
       }
 
-      // Sube las fotos al almacenamiento y obtén las URLs
       const urlsFotos = await this.subirFotosHotel(user.uid, params.fotos);
 
       const docRef = await addDoc(collection(this.db, 'hoteles'), {
@@ -73,11 +71,8 @@ export class HotelesService {
     const { user } = await FirebaseAuthentication.getCurrentUser();
 
     if (user) {
-      // const uid = user.uid;
 
       const hotelesRef = collection(this.db, 'hoteles');
-
-      // const q = query(hotelesRef, where('uidPropietario', '!=', 1));
 
       const querySnapshot = await getDocs(hotelesRef);
 
@@ -99,8 +94,6 @@ export class HotelesService {
     } else{
       throw new Error ('No se encontró el hotel seleccionado.')
     }
-    // const hoteles = await this.getHoteles();
-    // return hoteles.find((hotel: any) => hotel.id === id);
   }
 
   async cargarHoteles() {

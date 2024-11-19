@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlertController, IonBackButton, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, ModalController, ToastController, ViewDidEnter, ViewWillEnter } from '@ionic/angular/standalone';
@@ -37,13 +37,11 @@ export class MapsPage implements ViewDidEnter {
   async ionViewDidEnter() {
     console.log('ionViewDidEnter llamado');
 
-    // await new Promise(resolve => setTimeout(resolve, 200));
     this.initGoogleMaps();
   }
 
 
   async initGoogleMaps() {
-    // await new Promise(resolve => setTimeout(resolve, 100));
     const hasPermission = await this.checkPermissions();
     if (!hasPermission) {
       console.log('No hay permisos')
@@ -88,7 +86,7 @@ export class MapsPage implements ViewDidEnter {
   async checkPermissions() {
     let permissions = await Geolocation.checkPermissions();
     if (permissions.location !== 'granted' || permissions.coarseLocation !== 'granted') {
-      permissions = await Geolocation.requestPermissions(); // Solicitar permisos si no están concedidos
+      permissions = await Geolocation.requestPermissions(); 
     }
     return permissions.location === 'granted' && permissions.coarseLocation === 'granted'
   }
@@ -98,7 +96,7 @@ export class MapsPage implements ViewDidEnter {
   }
 
   async onNewCoordinates(coords: Point) {
-    console.log('Received coordinates:', coords); // Verificar que coords sea de tipo Point
+    console.log('Received coordinates:', coords); 
     this.map?.setCamera({
       coordinate: { lat: coords.lat, lng: coords.lng },
       zoom: 18

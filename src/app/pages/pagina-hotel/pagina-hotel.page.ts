@@ -5,7 +5,6 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton,
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 import { Swiper } from 'swiper';
-import { Hotel, Traslados } from 'src/app/interfaces';
 import { TrasladosService } from 'src/app/services/traslados/traslados.service';
 
 @Component({
@@ -24,10 +23,10 @@ export class PaginaHotelPage implements OnInit {
   traslados: any[] | undefined;
   aeropuerto: { lat: number; lng: number } | undefined;
   terminal: { lat: number; lng: number } | undefined;
-  distanciaAeropuerto: number | undefined; // Para guardar la distancia calculada
-  distanciaTerminal: number | undefined; // Para guardar la distancia calculada
-  costoAeropuerto: number | undefined; // Para guardar el costo calculado
-  costoTerminal: number | undefined; // Para guardar el costo calculado
+  distanciaAeropuerto: number | undefined; 
+  distanciaTerminal: number | undefined; 
+  costoAeropuerto: number | undefined;
+  costoTerminal: number | undefined;
 
   constructor(private route: ActivatedRoute, private hotelesService: HotelesService, private router: Router, private trasladosServices: TrasladosService) { }
 
@@ -81,15 +80,15 @@ export class PaginaHotelPage implements OnInit {
       {
         origins: [origenAeropuerto],
         destinations: [destino],
-        travelMode: google.maps.TravelMode.DRIVING, // Modo de viaje
-        unitSystem: google.maps.UnitSystem.METRIC, // Usar sistema métrico
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC, 
       },
       (response: any, status: string) => {
         if (status === google.maps.DistanceMatrixStatus.OK) {
           const resultados = response.rows[0].elements[0];
           console.log('resultados: ', resultados)
-          this.distanciaAeropuerto = resultados.distance.value / 1000; // Convertir metros a km
-          this.costoAeropuerto = this.distanciaAeropuerto * 1000; // Calcular costo
+          this.distanciaAeropuerto = resultados.distance.value / 1000; 
+          this.costoAeropuerto = this.distanciaAeropuerto * 1000; 
           console.log(`Distancia: ${this.distanciaAeropuerto} km, Costo estimado: $${this.costoAeropuerto}`);
         } else {
           console.error('Error en DistanceMatrixService:', status);
@@ -101,15 +100,15 @@ export class PaginaHotelPage implements OnInit {
       {
         origins: [origenTerminal],
         destinations: [destino],
-        travelMode: google.maps.TravelMode.DRIVING, // Modo de viaje
-        unitSystem: google.maps.UnitSystem.METRIC, // Usar sistema métrico
+        travelMode: google.maps.TravelMode.DRIVING, 
+        unitSystem: google.maps.UnitSystem.METRIC,
       },
       (response: any, status: string) => {
         if (status === google.maps.DistanceMatrixStatus.OK) {
           const resultados = response.rows[0].elements[0];
           console.log('resultados: ', resultados)
-          this.distanciaTerminal = resultados.distance.value / 1000; // Convertir metros a km
-          this.costoTerminal = this.distanciaTerminal * 1000; // Calcular costo
+          this.distanciaTerminal = resultados.distance.value / 1000;
+          this.costoTerminal = this.distanciaTerminal * 1000; 
           console.log(`Distancia: ${this.distanciaTerminal} km, Costo estimado: $${this.costoTerminal}`);
         } else {
           console.error('Error en DistanceMatrixService:', status);

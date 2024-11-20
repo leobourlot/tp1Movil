@@ -74,8 +74,6 @@ export class PaginaHotelPage implements OnInit {
     const origenTerminal = new google.maps.LatLng(this.terminal.lat, this.terminal.lng);
     const destino = new google.maps.LatLng(this.hotel.lat, this.hotel.lng);
 
-    const origenes = [origenAeropuerto, origenTerminal]
-
     service.getDistanceMatrix(
       {
         origins: [origenAeropuerto],

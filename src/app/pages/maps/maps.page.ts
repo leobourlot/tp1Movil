@@ -17,7 +17,7 @@ import { Geolocation } from '@capacitor/geolocation';
   templateUrl: './maps.page.html',
   styleUrls: ['./maps.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon, SearchComponent]
+  imports: [IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon, SearchComponent]
 })
 export class MapsPage implements ViewDidEnter {
 

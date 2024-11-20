@@ -18,7 +18,7 @@ import { TrasladosService } from 'src/app/services/traslados/traslados.service';
   templateUrl: './mapa-hotel.page.html',
   styleUrls: ['./mapa-hotel.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon, SearchComponent]
+  imports: [IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon]
 })
 export class MapaHotelPage implements OnInit {
 

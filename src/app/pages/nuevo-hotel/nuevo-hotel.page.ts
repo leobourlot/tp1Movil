@@ -15,7 +15,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
   templateUrl: './nuevo-hotel.page.html',
   styleUrls: ['./nuevo-hotel.page.scss'],
   standalone: true,
-  imports: [IonItem, IonButtons, IonIcon, IonBackButton, IonLoading, IonButton, IonInput, IonTextarea, IonInputPasswordToggle, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, MapsPage, SearchComponent]
+  imports: [IonIcon, IonBackButton, IonLoading, IonButton, IonInput, IonTextarea, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class NuevoHotelPage {
 

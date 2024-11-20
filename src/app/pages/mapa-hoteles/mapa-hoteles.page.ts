@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { search, checkmark, add, location, arrowBackOutline } from 'ionicons/icons';
-import { SearchComponent } from '../search/search.component'
 import { Geolocation } from '@capacitor/geolocation';
 import { HotelesService } from 'src/app/services/hoteles/hoteles.service';
 import { TrasladosService } from 'src/app/services/traslados/traslados.service';
@@ -18,7 +17,7 @@ import { TrasladosService } from 'src/app/services/traslados/traslados.service';
   templateUrl: './mapa-hoteles.page.html',
   styleUrls: ['./mapa-hoteles.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton, IonIcon, SearchComponent]
+  imports: [IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonBackButton]
 })
 export class MapaHotelesPage implements ViewDidEnter {
 
